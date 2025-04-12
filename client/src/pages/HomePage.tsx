@@ -150,12 +150,12 @@ const HomePage: React.FC = () => {
 
   // Get category color for challenge badge
   const getCategoryColor = (category: string) => {
-    if (category.toLowerCase().includes('web')) return 'bg-blue-100 text-blue-800';
-    if (category.toLowerCase().includes('data')) return 'bg-indigo-100 text-indigo-800';
-    if (category.toLowerCase().includes('mobile')) return 'bg-green-100 text-green-800';
-    if (category.toLowerCase().includes('backend')) return 'bg-amber-100 text-amber-800';
-    if (category.toLowerCase().includes('database')) return 'bg-yellow-100 text-yellow-800';
-    return 'bg-purple-100 text-purple-800';
+    if (category.toLowerCase().includes('web')) return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+    if (category.toLowerCase().includes('data')) return 'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-200';
+    if (category.toLowerCase().includes('mobile')) return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+    if (category.toLowerCase().includes('backend')) return 'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-200';
+    if (category.toLowerCase().includes('database')) return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+    return 'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-200';
   };
 
   return (
@@ -195,7 +195,7 @@ const HomePage: React.FC = () => {
             ) : (
               <>
                 <Link href="/candidates">
-                  <Button className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-md shadow hover:shadow-lg transition transform hover:-translate-y-0.5">
+                  <Button className="px-6 py-3 bg-white text-gray-800 font-semibold rounded-md shadow hover:shadow-lg transition transform hover:-translate-y-0.5">
                     Find Work
                   </Button>
                 </Link>
@@ -218,7 +218,7 @@ const HomePage: React.FC = () => {
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold">Featured Challenges</h2>
           <Link href="/challenges">
-            <Button variant="outline" className="text-primary hover:bg-blue-50">
+            <Button variant="outline" className="text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800">
               View All <ArrowRight className="ml-1 h-4 w-4" />
             </Button>
           </Link>
@@ -226,13 +226,13 @@ const HomePage: React.FC = () => {
 
         {isLoadingChallenges ? (
           <div className="flex justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <Loader2 className="h-8 w-8 animate-spin text-gray-700 dark:text-gray-300" />
           </div>
         ) : challenges?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {challenges.slice(0, 3).map((challenge: Challenge, index: number) => (
               <Link key={challenge.id} href={`/challenge/${challenge.id}`}>
-                <Card className={`hover:shadow-md transition-all border-l-4 border-primary cursor-pointer h-full ${getAnimationClass(index)}`}>
+                <Card className={`hover:shadow-md transition-all border-l-4 border-gray-700 cursor-pointer h-full ${getAnimationClass(index)}`}>
                   <CardContent className="p-6">
                     <Badge className={`mb-2 ${getCategoryColor(challenge.category)}`}>
                       {challenge.category}
@@ -299,7 +299,7 @@ const HomePage: React.FC = () => {
                 {user ? (
                   <>
                     <Link href="/challenges">
-                      <Button className="px-6 py-3 bg-primary text-white font-semibold rounded-md shadow hover:bg-blue-600 transition">
+                      <Button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded-md shadow hover:bg-gray-700 transition">
                         Browse Challenges
                       </Button>
                     </Link>
@@ -312,7 +312,7 @@ const HomePage: React.FC = () => {
                 ) : (
                   <>
                     <Button 
-                      className="px-6 py-3 bg-primary text-white font-semibold rounded-md shadow hover:bg-blue-600 transition"
+                      className="px-6 py-3 bg-gray-800 text-white font-semibold rounded-md shadow hover:bg-gray-700 transition"
                       onClick={navigateToAuth}
                     >
                       Create Profile
@@ -369,7 +369,7 @@ const HomePage: React.FC = () => {
               <button
                 key={index}
                 className={`w-3 h-3 rounded-full transition-colors ${
-                  activeTestimonial === index ? 'bg-primary' : 'bg-gray-300'
+                  activeTestimonial === index ? 'bg-gray-700 dark:bg-gray-300' : 'bg-gray-300 dark:bg-gray-700'
                 }`}
                 onClick={() => setActiveTestimonial(index)}
                 aria-label={`View testimonial ${index + 1}`}
@@ -385,19 +385,19 @@ const HomePage: React.FC = () => {
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">TalentMatch by the Numbers</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">7,500+</div>
+              <div className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">7,500+</div>
               <div className="text-gray-600">Skill Challenges</div>
             </div>
             <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">82%</div>
+              <div className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">82%</div>
               <div className="text-gray-600">Hiring Success Rate</div>
             </div>
             <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">21 Days</div>
+              <div className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">21 Days</div>
               <div className="text-gray-600">Average Time-to-Hire</div>
             </div>
             <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">96%</div>
+              <div className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">96%</div>
               <div className="text-gray-600">Employer Satisfaction</div>
             </div>
           </div>
