@@ -162,7 +162,7 @@ const HomePage: React.FC = () => {
     <div className="mb-12 animate-fade-in">
       {/* Hero Section with Dynamic User State */}
       <section className="relative bg-white rounded-xl shadow-md overflow-hidden mb-12">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-700 opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 opacity-90"></div>
         <div className="relative px-6 py-12 md:py-20 md:px-12 lg:px-20 text-white max-w-4xl">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
             {user 
@@ -179,7 +179,7 @@ const HomePage: React.FC = () => {
               <>
                 <Button 
                   onClick={navigateToChallenges} 
-                  className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-md shadow hover:shadow-lg transition transform hover:-translate-y-0.5"
+                  className="px-6 py-3 bg-white text-gray-800 font-semibold rounded-md shadow hover:shadow-lg transition transform hover:-translate-y-0.5"
                 >
                   Explore Challenges <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -209,7 +209,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
         <div className="hidden lg:block absolute right-0 bottom-0 w-1/3 h-full">
-          <div className="h-full w-full bg-gradient-to-l from-indigo-800 to-transparent"></div>
+          <div className="h-full w-full bg-gradient-to-l from-gray-900 to-transparent"></div>
         </div>
       </section>
 
@@ -326,7 +326,7 @@ const HomePage: React.FC = () => {
                 )}
               </div>
             </div>
-            <div className="md:w-1/2 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center p-8">
+            <div className="md:w-1/2 bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center p-8">
               <div className="text-white text-center">
                 <i className="fas fa-users-cog text-6xl mb-4"></i>
                 <h3 className="text-xl font-semibold">Join Our Community</h3>
