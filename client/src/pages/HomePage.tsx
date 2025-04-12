@@ -327,7 +327,7 @@ const HomePage: React.FC = () => {
                         <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/40 dark:to-blue-800/40 p-4 border-t border-blue-200 dark:border-blue-800">
                           <div className="flex justify-between items-center">
                             <div className="flex gap-1.5 flex-wrap">
-                              {['React', 'TypeScript', 'Node.js'].map((skill, i) => (
+                              {(challenge.skills || ['React', 'TypeScript', 'Node.js']).slice(0, 3).map((skill, i) => (
                                 <span key={i} className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 border border-blue-200 dark:border-blue-700 hover:bg-blue-200 dark:hover:bg-blue-700 transition-colors">
                                   {skill}
                                 </span>
@@ -340,14 +340,16 @@ const HomePage: React.FC = () => {
                           
                           <div className="mt-3 pt-2 border-t border-blue-200/50 dark:border-blue-800/50 flex justify-between items-center">
                             <div className="flex -space-x-2">
-                              {[...Array(3)].map((_, i) => (
-                                <div key={i} className="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 border-2 border-white dark:border-blue-900 flex items-center justify-center text-xs font-medium text-blue-800 dark:text-blue-200">
+                              {[...Array(Math.min(3, Math.floor(Number(challenge.completions || 0) / 10)))].map((_, i) => (
+                                <div key={i} className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800 border-2 border-white dark:border-blue-900 flex items-center justify-center text-xs font-medium text-blue-800 dark:text-blue-200">
                                   {String.fromCharCode(65 + i)}
                                 </div>
                               ))}
-                              <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800 border-2 border-white dark:border-blue-900 flex items-center justify-center text-xs font-medium text-blue-800 dark:text-blue-200">
-                                +{challenge.completions > 3 ? challenge.completions - 3 : 0}
-                              </div>
+                              {Number(challenge.completions || 0) > 30 && (
+                                <div className="w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-700 border-2 border-white dark:border-blue-900 flex items-center justify-center text-xs font-medium text-blue-800 dark:text-blue-200">
+                                  +{Math.floor(Number(challenge.completions || 0) / 10) - 3}
+                                </div>
+                              )}
                             </div>
                             <div className="text-xs text-blue-700 dark:text-blue-300">
                               Updated {new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric'})}
