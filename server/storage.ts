@@ -7,6 +7,19 @@ const MemoryStore = createMemoryStore(session);
 // modify the interface with any CRUD methods
 // you might need
 
+// Define enhanced Submission type with UI-specific properties
+export type EnhancedSubmission = Submission & { 
+  challengeTitle?: string; 
+  language?: string; 
+  assessmentData?: {
+    score: number | null;
+    feedback: string | null;
+    strengths: string[] | null;
+    areas_for_improvement: string[] | null;
+    suggestions: string[] | null;
+  };
+};
+
 export interface IStorage {
   // User methods
   getUser(id: number): Promise<User | undefined>;
@@ -25,8 +38,8 @@ export interface IStorage {
   
   // Submission methods
   createSubmission(submission: InsertSubmission): Promise<Submission>;
-  getSubmission(id: number): Promise<Submission | undefined>;
-  getUserSubmissions(userId: number): Promise<Submission[]>;
+  getSubmission(id: number): Promise<EnhancedSubmission | undefined>;
+  getUserSubmissions(userId: number): Promise<EnhancedSubmission[]>;
   getChallengeSubmissions(challengeId: number): Promise<Submission[]>;
   updateSubmissionStatus(id: number, status: string, assessmentData?: Partial<Submission>): Promise<Submission | undefined>;
   
@@ -168,14 +181,45 @@ export class MemStorage implements IStorage {
     return newSubmission;
   }
   
-  async getSubmission(id: number): Promise<Submission | undefined> {
-    return this.submissions.get(id);
+  async getSubmission(id: number): Promise<EnhancedSubmission | undefined> {
+    const submission = this.submissions.get(id);
+    if (!submission) return undefined;
+    
+    const challenge = await this.getChallenge(submission.challengeId);
+    return {
+      ...submission,
+      challengeTitle: challenge?.title || `Challenge #${submission.challengeId}`,
+      language: "JavaScript", // Default language
+      assessmentData: {
+        score: submission.score,
+        feedback: submission.feedback,
+        strengths: submission.strengths,
+        areas_for_improvement: submission.areasForImprovement,
+        suggestions: submission.suggestions
+      }
+    };
   }
   
-  async getUserSubmissions(userId: number): Promise<Submission[]> {
-    return Array.from(this.submissions.values()).filter(
-      (submission) => submission.userId === userId
-    );
+  async getUserSubmissions(userId: number): Promise<EnhancedSubmission[]> {
+    const userSubmissions = Array.from(this.submissions.values())
+      .filter(submission => submission.userId === userId);
+    
+    // Enhance submissions with challenge title
+    return Promise.all(userSubmissions.map(async (submission) => {
+      const challenge = await this.getChallenge(submission.challengeId);
+      return {
+        ...submission,
+        challengeTitle: challenge?.title || `Challenge #${submission.challengeId}`,
+        language: "JavaScript", // Default language
+        assessmentData: {
+          score: submission.score,
+          feedback: submission.feedback,
+          strengths: submission.strengths,
+          areas_for_improvement: submission.areasForImprovement,
+          suggestions: submission.suggestions
+        }
+      };
+    }));
   }
   
   async getChallengeSubmissions(challengeId: number): Promise<Submission[]> {

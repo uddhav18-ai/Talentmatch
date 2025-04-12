@@ -88,12 +88,12 @@ function AppContent() {
             <ProfilePage />
           </ProtectedRoute>
         </Route>
-        <Route path="/dashboard">
+        <Route path="/user/dashboard">
           <ProtectedRoute>
             <DashboardPage />
           </ProtectedRoute>
         </Route>
-        <Route path="/submissions">
+        <Route path="/user/submissions">
           <ProtectedRoute>
             <SubmissionsPage />
           </ProtectedRoute>
