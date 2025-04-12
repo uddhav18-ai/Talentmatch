@@ -251,13 +251,22 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                       {userRole ? `${userRole.charAt(0).toUpperCase() + userRole.slice(1)} Account` : 'Your Account'}
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem 
+                      className="cursor-pointer"
+                      onClick={() => setLocation(`/user/profile`)}
+                    >
                       <User className="h-4 w-4 mr-2" /> Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem 
+                      className="cursor-pointer"
+                      onClick={() => setLocation(`/user/dashboard`)}
+                    >
                       <BarChartIcon className="h-4 w-4 mr-2" /> My Dashboard
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem 
+                      className="cursor-pointer"
+                      onClick={() => setLocation(`/user/submissions`)}
+                    >
                       <PenToolIcon className="h-4 w-4 mr-2" /> My Submissions
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -340,9 +349,46 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     {userRole && <span className="ml-2 text-xs opacity-75">({userRole})</span>}
                   </span>
                 </div>
+                
                 <Button
                   variant="ghost"
                   className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-purple-200 dark:hover:bg-purple-800/40"
+                  onClick={() => {
+                    setLocation(`/user/profile`);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <User className="h-4 w-4 mr-2 inline" /> 
+                  My Profile
+                </Button>
+                
+                <Button
+                  variant="ghost"
+                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-purple-200 dark:hover:bg-purple-800/40"
+                  onClick={() => {
+                    setLocation(`/user/dashboard`);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <BarChartIcon className="h-4 w-4 mr-2 inline" /> 
+                  My Dashboard
+                </Button>
+                
+                <Button
+                  variant="ghost"
+                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-purple-200 dark:hover:bg-purple-800/40"
+                  onClick={() => {
+                    setLocation(`/user/submissions`);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <PenToolIcon className="h-4 w-4 mr-2 inline" /> 
+                  My Submissions
+                </Button>
+                
+                <Button
+                  variant="ghost"
+                  className="block w-full text-left px-4 py-2 text-red-600 dark:text-red-400 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:hover:bg-purple-800/40"
                   onClick={handleLogout}
                 >
                   <LogOut className="h-4 w-4 mr-2 inline" /> 

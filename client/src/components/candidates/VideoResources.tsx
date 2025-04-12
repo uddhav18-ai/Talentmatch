@@ -19,16 +19,104 @@ interface VideoResource {
 
 interface VideoResourcesProps {
   skills: string[];
+  portfolioType?: 'frontend' | 'backend' | 'fullstack' | 'data' | 'mobile' | null;
 }
 
-export default function VideoResources({ skills = [] }: VideoResourcesProps) {
+export default function VideoResources({ skills = [], portfolioType = null }: VideoResourcesProps) {
   const [activeSkill, setActiveSkill] = useState<string>(skills[0] || "React");
+  const [activePortfolio, setActivePortfolio] = useState<string>(portfolioType || 'all');
   const [videos, setVideos] = useState<VideoResource[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [savedVideos, setSavedVideos] = useState<string[]>([]);
 
+  // Portfolio-specific technologies
+  const portfolioTechnologies: Record<string, string[]> = {
+    'frontend': ['React', 'JavaScript', 'CSS', 'HTML', 'Web Development'],
+    'backend': ['Node.js', 'Python', 'Java', 'API Development', 'Database'],
+    'fullstack': ['JavaScript', 'React', 'Node.js', 'Web Development', 'Database'],
+    'data': ['Python', 'Data Science', 'SQL', 'Machine Learning', 'Data Visualization'],
+    'mobile': ['React Native', 'Swift', 'Kotlin', 'Mobile Development', 'App Design'],
+    'all': []
+  };
+  
   // Predefined videos by skill/technology to avoid actual API calls
   const videosBySkill: Record<string, VideoResource[]> = {
+    "CSS": [
+      {
+        id: "1Rs2ND1ryYc",
+        title: "CSS Tutorial - Zero to Hero (Complete Course)",
+        channelName: "freeCodeCamp.org",
+        description: "Learn CSS in this complete tutorial course. CSS is the language used to style websites.",
+        thumbnail: "https://i.ytimg.com/vi/1Rs2ND1ryYc/mqdefault.jpg",
+        url: "https://www.youtube.com/watch?v=1Rs2ND1ryYc",
+        tags: ["CSS", "Web Development", "Frontend"],
+        viewCount: "1.1M",
+        publishedAt: "2021-02-13"
+      },
+      {
+        id: "yfoY53QXEnI",
+        title: "CSS Crash Course For Absolute Beginners",
+        channelName: "Traversy Media",
+        description: "In this crash course we will go over CSS fundamentals and basic styling concepts.",
+        thumbnail: "https://i.ytimg.com/vi/yfoY53QXEnI/mqdefault.jpg",
+        url: "https://www.youtube.com/watch?v=yfoY53QXEnI",
+        tags: ["CSS", "Web Development", "Frontend"],
+        viewCount: "2.3M",
+        publishedAt: "2017-02-07"
+      }
+    ],
+    "HTML": [
+      {
+        id: "pQN-pnXPaVg",
+        title: "HTML Full Course - Build a Website Tutorial",
+        channelName: "freeCodeCamp.org",
+        description: "Learn the basics of HTML in this comprehensive tutorial.",
+        thumbnail: "https://i.ytimg.com/vi/pQN-pnXPaVg/mqdefault.jpg",
+        url: "https://www.youtube.com/watch?v=pQN-pnXPaVg",
+        tags: ["HTML", "Web Development", "Tutorial"],
+        viewCount: "6.7M",
+        publishedAt: "2019-02-18"
+      }
+    ],
+    "React Native": [
+      {
+        id: "0-S5a0eXPoc",
+        title: "React Native Tutorial for Beginners - Build a React Native App",
+        channelName: "Programming with Mosh",
+        description: "Learn React Native by building a complete mobile app.",
+        thumbnail: "https://i.ytimg.com/vi/0-S5a0eXPoc/mqdefault.jpg",
+        url: "https://www.youtube.com/watch?v=0-S5a0eXPoc",
+        tags: ["React Native", "Mobile Development", "App Development"],
+        viewCount: "982K",
+        publishedAt: "2020-05-22"
+      }
+    ],
+    "Swift": [
+      {
+        id: "comQ1-x2a1Q",
+        title: "Swift Programming Tutorial | FULL COURSE | Absolute Beginner",
+        channelName: "CodeWithChris",
+        description: "This Swift tutorial will teach you all the basics of Swift programming.",
+        thumbnail: "https://i.ytimg.com/vi/comQ1-x2a1Q/mqdefault.jpg",
+        url: "https://www.youtube.com/watch?v=comQ1-x2a1Q",
+        tags: ["Swift", "iOS", "Apple", "Mobile Development"],
+        viewCount: "753K",
+        publishedAt: "2019-10-21"
+      }
+    ],
+    "Data Science": [
+      {
+        id: "ua-CiDNNj30",
+        title: "Data Science Full Course - Learn Data Science in 10 Hours",
+        channelName: "Edureka",
+        description: "This Data Science Full Course video will help you understand various Data Science concepts.",
+        thumbnail: "https://i.ytimg.com/vi/ua-CiDNNj30/mqdefault.jpg",
+        url: "https://www.youtube.com/watch?v=ua-CiDNNj30",
+        tags: ["Data Science", "Python", "Machine Learning"],
+        viewCount: "2.3M",
+        publishedAt: "2019-08-23"
+      }
+    ],
     "React": [
       {
         id: "SqcY0GlETPk",
@@ -142,10 +230,23 @@ export default function VideoResources({ skills = [] }: VideoResourcesProps) {
     ]
   };
 
-  // Get default skills if none are provided
-  const availableSkills = skills.length > 0 ? 
-    skills : 
-    Object.keys(videosBySkill);
+  // Get portfolio-specific skills or default skills if none are provided
+  const availableSkills = React.useMemo(() => {
+    // If we have a portfolio type, filter by that
+    if (portfolioType && portfolioType !== 'all') {
+      return portfolioTechnologies[portfolioType] || Object.keys(videosBySkill);
+    }
+    
+    // Otherwise use provided skills or all skills
+    return skills.length > 0 ? skills : Object.keys(videosBySkill);
+  }, [portfolioType, skills]);
+
+  // Set initial active skill based on available skills
+  useEffect(() => {
+    if (availableSkills.length > 0 && !availableSkills.includes(activeSkill)) {
+      setActiveSkill(availableSkills[0]);
+    }
+  }, [availableSkills]);
 
   // Load videos when active skill changes
   useEffect(() => {
