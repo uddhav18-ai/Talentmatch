@@ -93,7 +93,7 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({
           {selectedSkills.map((skill) => (
             <Badge 
               key={skill} 
-              className="bg-blue-100 hover:bg-blue-200 text-blue-800 dark:bg-blue-900 dark:text-blue-200 group flex items-center gap-1 px-3 py-1 transition-all duration-200 animate-fade-in"
+              className="bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 group flex items-center gap-1 px-3 py-1 transition-all duration-200 animate-fade-in"
             >
               {skill}
               <button 

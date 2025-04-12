@@ -338,13 +338,13 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             </Button>
           ))}
           
-          <div className="pt-2 border-t border-gray-200 dark:border-purple-800 mt-2">
+          <div className="pt-2 border-t border-gray-200 dark:border-gray-700 mt-2">
             {user ? (
               // Mobile logged in state
               <>
                 <div className="px-4 py-2 flex items-center">
-                  <User className="h-4 w-4 mr-2 text-primary dark:text-purple-400" />
-                  <span className="font-medium dark:text-purple-50">
+                  <User className="h-4 w-4 mr-2 text-gray-800 dark:text-gray-400" />
+                  <span className="font-medium dark:text-gray-200">
                     {user.username}
                     {userRole && <span className="ml-2 text-xs opacity-75">({userRole})</span>}
                   </span>
@@ -352,7 +352,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 
                 <Button
                   variant="ghost"
-                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-purple-200 dark:hover:bg-purple-800/40"
+                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
                   onClick={() => {
                     setLocation(`/profile`);
                     setMobileMenuOpen(false);
@@ -364,7 +364,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 
                 <Button
                   variant="ghost"
-                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-purple-200 dark:hover:bg-purple-800/40"
+                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
                   onClick={() => {
                     setLocation(`/user/dashboard`);
                     setMobileMenuOpen(false);
@@ -376,7 +376,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 
                 <Button
                   variant="ghost"
-                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-purple-200 dark:hover:bg-purple-800/40"
+                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
                   onClick={() => {
                     setLocation(`/user/submissions`);
                     setMobileMenuOpen(false);
@@ -388,7 +388,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 
                 <Button
                   variant="ghost"
-                  className="block w-full text-left px-4 py-2 text-red-600 dark:text-red-400 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:hover:bg-purple-800/40"
+                  className="block w-full text-left px-4 py-2 text-red-600 dark:text-red-400 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:hover:bg-gray-800"
                   onClick={handleLogout}
                 >
                   <LogOut className="h-4 w-4 mr-2 inline" /> 
@@ -400,7 +400,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               <>
                 <Button
                   variant="ghost"
-                  className="block w-full text-left px-4 py-2 text-primary font-medium hover:bg-blue-50 rounded-md transition-all duration-300 dark:text-purple-200 dark:hover:bg-purple-800/40"
+                  className="block w-full text-left px-4 py-2 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
                   onClick={handleSignIn}
                 >
                   Sign In
@@ -408,7 +408,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <Link href="/auth?tab=register">
                   <Button
                     variant="default"
-                    className="block w-full mt-1 px-4 py-2 bg-primary text-white font-medium hover:bg-blue-600 rounded-md transition-all duration-300"
+                    className="block w-full mt-1 px-4 py-2 bg-gray-800 text-white font-medium hover:bg-gray-600 rounded-md transition-all duration-300"
                   >
                     Join Now
                   </Button>
