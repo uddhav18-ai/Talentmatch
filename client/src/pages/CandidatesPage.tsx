@@ -36,11 +36,13 @@ const CandidatesPage: React.FC = () => {
   const [animateSections, setAnimateSections] = useState({
     profile: false,
     challenge: false,
+    videoResources: false,
     testimonials: false
   });
 
   const profileRef = useRef<HTMLDivElement>(null);
   const challengeRef = useRef<HTMLDivElement>(null);
+  const videoResourcesRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
 
   // Animation observer setup
@@ -53,6 +55,8 @@ const CandidatesPage: React.FC = () => {
               setAnimateSections(prev => ({ ...prev, profile: true }));
             } else if (entry.target === challengeRef.current) {
               setAnimateSections(prev => ({ ...prev, challenge: true }));
+            } else if (entry.target === videoResourcesRef.current) {
+              setAnimateSections(prev => ({ ...prev, videoResources: true }));
             } else if (entry.target === testimonialsRef.current) {
               setAnimateSections(prev => ({ ...prev, testimonials: true }));
             }
@@ -64,6 +68,7 @@ const CandidatesPage: React.FC = () => {
 
     if (profileRef.current) observer.observe(profileRef.current);
     if (challengeRef.current) observer.observe(challengeRef.current);
+    if (videoResourcesRef.current) observer.observe(videoResourcesRef.current);
     if (testimonialsRef.current) observer.observe(testimonialsRef.current);
 
     return () => {
@@ -497,6 +502,27 @@ router.post('/resources', auth, async (req, res) => {
             )}
           </CardContent>
         </Card>
+      </div>
+
+      {/* Video Learning Resources */}
+      <div className="max-w-6xl mx-auto px-4 mb-12">
+        <div id="video-resources-section" className="animate-fade-in">
+          <Card 
+            className={`overflow-hidden transition-all duration-300 hover:shadow-md ${animateSections.videoResources ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            ref={videoResourcesRef}
+          >
+            <CardContent className="p-8">
+              <div className="flex items-center mb-6">
+                <YoutubeIcon className="h-6 w-6 text-red-600 mr-2" />
+                <h2 className="text-2xl font-bold dark:text-white">Learning Resources</h2>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Enhance your skills with these curated video tutorials and courses based on the skills you've selected.
+              </p>
+              <VideoResources skills={skills} />
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       {/* Testimonials */}
