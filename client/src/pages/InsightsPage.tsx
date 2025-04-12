@@ -242,10 +242,10 @@ const InsightsPage: React.FC = () => {
                 {highestPayingSkills.map((skill, index) => (
                   <div 
                     key={index}
-                    className="flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100"
+                    className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                   >
-                    <span className="font-medium">{skill.skill}</span>
-                    <span className="text-gray-800 font-semibold">{skill.salary}</span>
+                    <span className="font-medium text-gray-800 dark:text-gray-200">{skill.skill}</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-semibold">{skill.salary}</span>
                   </div>
                 ))}
               </div>
@@ -275,8 +275,8 @@ const InsightsPage: React.FC = () => {
                 Compare
               </Button>
             </div>
-            <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 text-center">
-              <p className="text-gray-600">Select two skills to see a detailed comparison of demand, salary impact, and growth trends.</p>
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-800 text-center">
+              <p className="text-gray-700 dark:text-gray-300">Select two skills to see a detailed comparison of demand, salary impact, and growth trends.</p>
             </div>
           </div>
         </CardContent>
@@ -306,38 +306,38 @@ const InsightsPage: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {companies.map((company, index) => (
-                <div key={index} className="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:shadow-sm">
+                <div key={index} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700 hover:shadow-sm transition-colors">
                   <div className="flex items-center mb-3">
-                    <div className={`w-10 h-10 ${company.bgColor} rounded-full flex items-center justify-center mr-3`}>
+                    <div className={`w-10 h-10 ${company.bgColor} dark:bg-opacity-80 rounded-full flex items-center justify-center mr-3`}>
                       <span className={`font-bold ${company.textColor}`}>{company.initial}</span>
                     </div>
                     <div>
-                      <p className="font-medium">{company.name}</p>
-                      <p className="text-sm text-gray-600">{company.industry}</p>
+                      <p className="font-medium dark:text-white">{company.name}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{company.industry}</p>
                     </div>
                   </div>
                   <div className="space-y-2">
                     {company.ratings.workLifeBalance && (
                       <div className="flex justify-between items-center">
-                        <span className="text-sm">Work-Life Balance</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">Work-Life Balance</span>
                         <span className="text-yellow-500">{'★'.repeat(company.ratings.workLifeBalance) + '☆'.repeat(5 - company.ratings.workLifeBalance)}</span>
                       </div>
                     )}
                     {company.ratings.careerGrowth && (
                       <div className="flex justify-between items-center">
-                        <span className="text-sm">Career Growth</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">Career Growth</span>
                         <span className="text-yellow-500">{'★'.repeat(company.ratings.careerGrowth) + '☆'.repeat(5 - company.ratings.careerGrowth)}</span>
                       </div>
                     )}
                     {company.ratings.compensation && (
                       <div className="flex justify-between items-center">
-                        <span className="text-sm">Compensation</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">Compensation</span>
                         <span className="text-yellow-500">{'★'.repeat(company.ratings.compensation) + '☆'.repeat(5 - company.ratings.compensation)}</span>
                       </div>
                     )}
                     {company.ratings.diversityInclusion && (
                       <div className="flex justify-between items-center">
-                        <span className="text-sm">Diversity & Inclusion</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">Diversity & Inclusion</span>
                         <span className="text-yellow-500">{'★'.repeat(company.ratings.diversityInclusion) + '☆'.repeat(5 - company.ratings.diversityInclusion)}</span>
                       </div>
                     )}
@@ -361,13 +361,13 @@ const InsightsPage: React.FC = () => {
                     Search
                   </Button>
                 </div>
-                <div className="mt-4 border border-gray-200 rounded-lg p-6 bg-gray-50 text-center">
-                  <p className="text-gray-600">Enter a company name to see detailed culture metrics, reviews, and insights from current and former employees.</p>
+                <div className="mt-4 border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-gray-50 dark:bg-gray-800 text-center">
+                  <p className="text-gray-700 dark:text-gray-300">Enter a company name to see detailed culture metrics, reviews, and insights from current and former employees.</p>
                 </div>
               </div>
-              <div className="md:w-1/4 bg-blue-50 rounded-lg p-4 border border-blue-200">
-                <h4 className="font-medium text-blue-800 mb-2">Why This Matters</h4>
-                <p className="text-sm text-blue-700">Company culture has one of the strongest correlations with job satisfaction and retention. Use these insights to find your ideal workplace.</p>
+              <div className="md:w-1/4 bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+                <h4 className="font-medium text-blue-800 dark:text-blue-300 mb-2">Why This Matters</h4>
+                <p className="text-sm text-blue-700 dark:text-blue-300">Company culture has one of the strongest correlations with job satisfaction and retention. Use these insights to find your ideal workplace.</p>
               </div>
             </div>
           </div>
