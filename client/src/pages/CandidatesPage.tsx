@@ -7,7 +7,7 @@ import SkillSelector from '../components/candidates/SkillSelector';
 import VideoResources from '../components/candidates/VideoResources';
 import ProgressBar from '../components/ui/progress-bar';
 import Testimonial from '../components/home/Testimonial';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { 
   Clock, 
   CheckCircle, 
@@ -25,6 +25,12 @@ import {
 } from 'lucide-react';
 
 const CandidatesPage: React.FC = () => {
+  const [_, setLocation] = useLocation();
+  
+  const navigateToCandidateSignup = () => {
+    setLocation('/auth?type=candidate');
+  };
+
   const [skills, setSkills] = useState<string[]>([
     'JavaScript', 'React', 'UI Design', 'Project Management', 'Data Analysis'
   ]);
@@ -224,7 +230,13 @@ router.post('/resources', auth, async (req, res) => {
           Skill-Based Hiring Platform
         </div>
         <h1 className="text-3xl md:text-4xl font-bold mb-4 dark:text-white">For Candidates</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300">Showcase your actual skills, not just your resume. Get matched with opportunities that value what you can do.</p>
+        <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">Showcase your actual skills, not just your resume. Get matched with opportunities that value what you can do.</p>
+        <Button 
+          onClick={navigateToCandidateSignup}
+          className="px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 font-semibold rounded-md shadow-md transform transition hover:scale-105"
+        >
+          Join Now
+        </Button>
       </div>
 
       {/* Profile Creation Process */}
