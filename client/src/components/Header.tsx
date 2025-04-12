@@ -239,7 +239,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   <DropdownMenuTrigger asChild>
                     <Button 
                       variant="ghost" 
-                      className="px-3 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-purple-200 dark:hover:bg-purple-800/40"
+                      className="px-3 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
                     >
                       <User className="h-4 w-4 mr-2" />
                       <span className="font-medium">{user.username}</span>
@@ -281,7 +281,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               <div className="hidden md:flex items-center space-x-2">
                 <Button
                   variant="ghost"
-                  className="px-4 py-2 text-primary font-medium hover:bg-blue-50 rounded-md transition-all duration-300 dark:text-purple-200 dark:hover:bg-purple-800/40"
+                  className="px-4 py-2 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
                   onClick={handleSignIn}
                 >
                   Sign In
@@ -289,7 +289,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <Link href="/auth?tab=register">
                   <Button
                     variant="default"
-                    className="px-4 py-2 bg-primary text-white font-medium hover:bg-blue-600 rounded-md transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105"
+                    className="px-4 py-2 bg-gray-800 text-white font-medium hover:bg-gray-600 rounded-md transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105"
                   >
                     Join Now
                   </Button>
@@ -303,23 +303,23 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               className="md:hidden p-2 rounded-md"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              <Menu className="h-5 w-5 text-gray-700 dark:text-purple-200" />
+              <Menu className="h-5 w-5 text-gray-700 dark:text-gray-300" />
             </Button>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden bg-white dark:bg-purple-950 shadow-lg absolute w-full animate-fade-in ${mobileMenuOpen ? 'block' : 'hidden'}`}>
+      <div className={`md:hidden bg-white dark:bg-gray-950 shadow-lg absolute w-full animate-fade-in ${mobileMenuOpen ? 'block' : 'hidden'}`}>
         <div className="px-4 py-2 space-y-1">
           {allNavItems.map(item => (
             <Button
               key={item.id}
               variant="ghost"
-              className={`block w-full text-left px-4 py-2 font-medium rounded-md hover:bg-blue-50 transition-all duration-300 dark:hover:bg-purple-800 ${
+              className={`block w-full text-left px-4 py-2 font-medium rounded-md hover:bg-gray-100 transition-all duration-300 dark:hover:bg-gray-800 ${
                 activeTab === item.id 
-                  ? 'bg-blue-50 text-primary dark:bg-purple-800/50 dark:text-purple-200' 
-                  : 'text-gray-700 dark:text-purple-200'
+                  ? 'bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200' 
+                  : 'text-gray-700 dark:text-gray-300'
               }`}
               onClick={() => {
                 // Handle items with direct paths (employer actions)
