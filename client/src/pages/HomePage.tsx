@@ -14,7 +14,9 @@ import {
   CheckCircle, 
   ArrowRight, 
   TrendingUp,
-  PieChart
+  PieChart,
+  Clock,
+  Users
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -150,12 +152,15 @@ const HomePage: React.FC = () => {
 
   // Get category color for challenge badge
   const getCategoryColor = (category: string) => {
-    if (category.toLowerCase().includes('web')) return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
-    if (category.toLowerCase().includes('data')) return 'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-200';
-    if (category.toLowerCase().includes('mobile')) return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
-    if (category.toLowerCase().includes('backend')) return 'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-200';
-    if (category.toLowerCase().includes('database')) return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
-    return 'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-200';
+    if (category.toLowerCase().includes('web')) return 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100';
+    if (category.toLowerCase().includes('data')) return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-800 dark:text-emerald-100';
+    if (category.toLowerCase().includes('mobile')) return 'bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100';
+    if (category.toLowerCase().includes('backend')) return 'bg-amber-100 text-amber-800 dark:bg-amber-800 dark:text-amber-100';
+    if (category.toLowerCase().includes('database')) return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-800 dark:text-indigo-100';
+    if (category.toLowerCase().includes('ai')) return 'bg-rose-100 text-rose-800 dark:bg-rose-800 dark:text-rose-100';
+    if (category.toLowerCase().includes('cloud')) return 'bg-cyan-100 text-cyan-800 dark:bg-cyan-800 dark:text-cyan-100';
+    if (category.toLowerCase().includes('security')) return 'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100';
+    return 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100';
   };
 
   return (
@@ -236,23 +241,99 @@ const HomePage: React.FC = () => {
           </div>
         ) : challenges?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {challenges.slice(0, 3).map((challenge: Challenge, index: number) => (
-              <Link key={challenge.id} href={`/challenge/${challenge.id}`}>
-                <Card className={`hover:shadow-md transition-all border-l-4 border-gray-700 cursor-pointer h-full ${getAnimationClass(index)}`}>
-                  <CardContent className="p-6">
-                    <Badge className={`mb-2 ${getCategoryColor(challenge.category)}`}>
-                      {challenge.category}
-                    </Badge>
-                    <h3 className="text-xl font-bold mb-2 line-clamp-2">{challenge.title}</h3>
-                    <p className="text-gray-600 mb-4 line-clamp-3">{challenge.description}</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-500">{challenge.timeEstimate}</span>
-                      <span className="text-sm text-gray-500">{challenge.completions} completions</span>
+            {challenges.slice(0, 3).map((challenge: Challenge, index: number) => {
+              // Determine border color based on category
+              const getBorderColor = (category: string) => {
+                if (category.toLowerCase().includes('web')) return 'border-blue-500';
+                if (category.toLowerCase().includes('data')) return 'border-emerald-500';
+                if (category.toLowerCase().includes('mobile')) return 'border-purple-500';
+                if (category.toLowerCase().includes('backend')) return 'border-amber-500';
+                if (category.toLowerCase().includes('database')) return 'border-indigo-500';
+                if (category.toLowerCase().includes('ai')) return 'border-rose-500';
+                if (category.toLowerCase().includes('cloud')) return 'border-cyan-500';
+                if (category.toLowerCase().includes('security')) return 'border-red-500';
+                return 'border-blue-500';
+              };
+              
+              // Generate a difficulty UI element
+              const getDifficultyElement = (difficulty: string) => {
+                const getColor = (diff: string) => {
+                  if (diff.toLowerCase() === 'easy') return 'text-green-500';
+                  if (diff.toLowerCase() === 'medium') return 'text-yellow-500';
+                  if (diff.toLowerCase() === 'hard') return 'text-orange-500';
+                  if (diff.toLowerCase() === 'expert') return 'text-red-500';
+                  return 'text-blue-500';
+                };
+                
+                return (
+                  <div className="flex items-center">
+                    <span className={`font-medium ${getColor(difficulty)}`}>{difficulty}</span>
+                    <div className="flex ml-2">
+                      {['Easy', 'Medium', 'Hard', 'Expert'].map((level, i) => {
+                        const isActive = difficulty.toLowerCase() === level.toLowerCase();
+                        const getActiveColor = (level: string) => {
+                          if (level.toLowerCase() === 'easy') return 'bg-green-500';
+                          if (level.toLowerCase() === 'medium') return 'bg-yellow-500';
+                          if (level.toLowerCase() === 'hard') return 'bg-orange-500';
+                          if (level.toLowerCase() === 'expert') return 'bg-red-500';
+                          return 'bg-blue-500';
+                        };
+                        return (
+                          <div 
+                            key={i} 
+                            className={`h-1.5 w-4 rounded-sm mx-0.5 ${isActive ? getActiveColor(level) : 'bg-gray-200 dark:bg-gray-700'}`}
+                          />
+                        );
+                      })}
                     </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+                  </div>
+                );
+              };
+              
+              return (
+                <Link key={challenge.id} href={`/challenge/${challenge.id}`}>
+                  <Card 
+                    className={`group hover:shadow-lg transition-all border-l-4 ${getBorderColor(challenge.category)} 
+                    cursor-pointer h-full transform hover:-translate-y-1 ${getAnimationClass(index)}`}
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex justify-between items-start mb-3">
+                        <Badge className={`${getCategoryColor(challenge.category)}`}>
+                          {challenge.category}
+                        </Badge>
+                        {getDifficultyElement(challenge.difficulty || 'Medium')}
+                      </div>
+                      <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{challenge.title}</h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{challenge.description}</p>
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                          <Clock className="h-4 w-4 text-gray-400 mr-1" />
+                          <span className="text-sm text-gray-500 dark:text-gray-400">{challenge.timeEstimate}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Users className="h-4 w-4 text-gray-400 mr-1" />
+                          <span className="text-sm text-gray-500 dark:text-gray-400">{challenge.completions} completions</span>
+                        </div>
+                      </div>
+                      <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <div className="flex justify-between items-center">
+                          <div className="flex gap-1.5">
+                            {['React', 'TypeScript', 'Node.js'].map((skill, i) => (
+                              <span key={i} className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                          <Button variant="ghost" size="sm" className="text-blue-600 dark:text-blue-400">
+                            <ArrowRight className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
           </div>
         ) : (
           <Card>
