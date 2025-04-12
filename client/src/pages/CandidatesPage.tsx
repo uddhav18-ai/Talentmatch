@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import SkillPill from '../components/candidates/SkillPill';
 import SkillSelector from '../components/candidates/SkillSelector';
+import VideoResources from '../components/candidates/VideoResources';
 import ProgressBar from '../components/ui/progress-bar';
 import Testimonial from '../components/home/Testimonial';
 import { Link } from 'wouter';
@@ -19,7 +20,8 @@ import {
   PieChart,
   ClipboardEdit,
   Eye,
-  Timer
+  Timer,
+  YoutubeIcon
 } from 'lucide-react';
 
 const CandidatesPage: React.FC = () => {
