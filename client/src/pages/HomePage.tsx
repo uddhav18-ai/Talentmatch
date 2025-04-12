@@ -309,14 +309,43 @@ const HomePage: React.FC = () => {
               AI-powered matching to connect talent with opportunities, and real-world challenges to showcase what truly matters - your abilities.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
-              <div className="bg-white dark:bg-blue-800 p-3 rounded shadow-sm">
-                <p className="text-blue-600 dark:text-blue-200 font-medium">75% faster hiring</p>
+              <div className="static-white-bg bg-white dark:bg-blue-800 p-3 rounded shadow-sm">
+                <p className="text-constant font-medium">75% faster hiring</p>
               </div>
-              <div className="bg-white dark:bg-blue-800 p-3 rounded shadow-sm">
-                <p className="text-blue-600 dark:text-blue-200 font-medium">90% retention rate</p>
+              <div className="static-white-bg bg-white dark:bg-blue-800 p-3 rounded shadow-sm">
+                <p className="text-constant font-medium">90% retention rate</p>
               </div>
-              <div className="bg-white dark:bg-blue-800 p-3 rounded shadow-sm">
-                <p className="text-blue-600 dark:text-blue-200 font-medium">100% skill-focused</p>
+              <div className="static-white-bg bg-white dark:bg-blue-800 p-3 rounded shadow-sm">
+                <p className="text-constant font-medium">100% skill-focused</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Process Steps - fills the gap below Our Unique Approach */}
+          <div className="max-w-4xl mx-auto mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+              <div className="relative">
+                <div className="static-dark-bg bg-blue-600 dark:bg-blue-700 w-16 h-16 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold mb-3">1</div>
+                <h4 className="font-medium mb-2">Create Profile</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Build your skill-based profile that highlights your true capabilities</p>
+                <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-blue-300 dark:bg-blue-600 -z-10"></div>
+              </div>
+              <div className="relative">
+                <div className="static-dark-bg bg-blue-600 dark:bg-blue-700 w-16 h-16 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold mb-3">2</div>
+                <h4 className="font-medium mb-2">Take Challenges</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Demonstrate your skills through real-world coding challenges</p>
+                <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-blue-300 dark:bg-blue-600 -z-10"></div>
+              </div>
+              <div className="relative">
+                <div className="static-dark-bg bg-blue-600 dark:bg-blue-700 w-16 h-16 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold mb-3">3</div>
+                <h4 className="font-medium mb-2">Match with Jobs</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Get matched with companies based on skill alignment, not just keywords</p>
+                <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-blue-300 dark:bg-blue-600 -z-10"></div>
+              </div>
+              <div>
+                <div className="static-dark-bg bg-blue-600 dark:bg-blue-700 w-16 h-16 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold mb-3">4</div>
+                <h4 className="font-medium mb-2">Get Hired</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Skip traditional interviews and get hired based on proven abilities</p>
               </div>
             </div>
           </div>
@@ -384,14 +413,14 @@ const HomePage: React.FC = () => {
                 )}
               </div>
             </div>
-            <div className="md:w-1/2 bg-gradient-to-br from-blue-700 to-blue-900 dark:from-blue-800 dark:to-blue-950 flex items-center justify-center p-8">
-              <div className="text-white text-center">
-                <i className="fas fa-users-cog text-6xl mb-4 text-blue-200"></i>
-                <h3 className="text-xl font-semibold">Join Our Community</h3>
-                <p className="mt-2 opacity-90">Connect with professionals and companies focused on skills</p>
+            <div className="static-dark-bg md:w-1/2 bg-gradient-to-br from-blue-700 to-blue-900 dark:from-blue-800 dark:to-blue-950 flex items-center justify-center p-8">
+              <div className="text-center">
+                <i className="fas fa-users-cog text-6xl mb-4 text-constant text-blue-200"></i>
+                <h3 className="text-xl font-semibold text-constant text-white">Join Our Community</h3>
+                <p className="mt-2 opacity-90 text-constant text-white">Connect with professionals and companies focused on skills</p>
                 <div className="mt-6 flex justify-center space-x-2">
-                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm shadow-sm border border-blue-400/30 hover:bg-opacity-30 transition-all cursor-pointer">4,500+ Candidates</span>
-                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm shadow-sm border border-blue-400/30 hover:bg-opacity-30 transition-all cursor-pointer">850+ Companies</span>
+                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm shadow-sm border border-blue-400/30 hover:bg-opacity-30 transition-all cursor-pointer text-constant text-white">4,500+ Candidates</span>
+                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm shadow-sm border border-blue-400/30 hover:bg-opacity-30 transition-all cursor-pointer text-constant text-white">850+ Companies</span>
                 </div>
               </div>
             </div>

@@ -29,6 +29,15 @@
     @apply text-gray-800;
   }
   
+  /* Elements where background doesn't change should have consistent text color */
+  .static-white-bg .text-constant {
+    color: #1f2937 !important; /* Always dark text */
+  }
+  
+  .static-dark-bg .text-constant {
+    color: #f3f4f6 !important; /* Always light text */
+  }
+  
   /* Button styling for light mode with better contrast */
   button:not(.bg-destructive):not(.bg-secondary) {
     background: #0078d7;
