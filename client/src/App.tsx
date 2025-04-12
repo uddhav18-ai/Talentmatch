@@ -17,6 +17,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from './hooks/use-auth';
 import { ThemeProvider } from './hooks/use-theme';
 import { ProtectedRoute } from './lib/protected-route';
+import Chatbot from './components/chat/Chatbot';
 import './lib/animations.css';
 
 function AppContent() {
@@ -77,6 +78,9 @@ function AppContent() {
           <NotFound />
         </Route>
       </Switch>
+      
+      {/* Chatbot - accessible on all pages */}
+      <Chatbot />
     </MainLayout>
   );
 }
