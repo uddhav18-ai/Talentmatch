@@ -219,8 +219,8 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Featured Challenges Section */}
-      <section className="mb-16">
-        <div className="flex justify-between items-center mb-8">
+      <section className="mb-10">
+        <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl md:text-3xl font-bold">Featured Challenges</h2>
           <Link href="/challenges">
             <Button variant="outline" className="text-blue-600 hover:bg-blue-50 dark:text-blue-300 dark:hover:bg-blue-900">
@@ -228,7 +228,7 @@ const HomePage: React.FC = () => {
             </Button>
           </Link>
         </div>
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
             Our challenges are designed by industry experts to assess real-world skills. 
             Complete them to showcase your abilities and get matched with relevant opportunities.
@@ -240,8 +240,8 @@ const HomePage: React.FC = () => {
             <Loader2 className="h-8 w-8 animate-spin text-gray-700 dark:text-gray-300" />
           </div>
         ) : challenges?.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {challenges.slice(0, 3).map((challenge: Challenge, index: number) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {challenges.slice(0, 6).map((challenge: Challenge, index: number) => {
               // Determine border color based on category
               const getBorderColor = (category: string) => {
                 if (category.toLowerCase().includes('web')) return 'border-blue-500';
@@ -345,31 +345,31 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Features Section with Staggered Animation */}
-      <section className="mb-16">
-        <div className="flex flex-col items-center text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">How We're Different</h2>
-          <p className="text-gray-600 max-w-2xl mb-4">Traditional hiring is broken. We've built a new approach that focuses on skills and potential, not keywords and credentials.</p>
-          <div className="max-w-3xl mx-auto bg-blue-50 dark:bg-blue-900 p-6 rounded-lg border-l-4 border-blue-500 mb-8">
+      <section className="mb-10">
+        <div className="flex flex-col items-center text-center mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">How We're Different</h2>
+          <p className="text-gray-600 max-w-2xl mb-3">Traditional hiring is broken. We've built a new approach that focuses on skills and potential, not keywords and credentials.</p>
+          <div className="max-w-3xl mx-auto bg-blue-50 dark:bg-blue-900 p-5 rounded-lg border-l-4 border-blue-500 mb-4">
             <h3 className="text-xl font-semibold text-blue-700 dark:text-blue-300 mb-2">Our Unique Approach</h3>
             <p className="text-gray-700 dark:text-gray-300">
               We've reimagined the hiring process from the ground up. Our platform uses blind skill assessments to eliminate bias,
               AI-powered matching to connect talent with opportunities, and real-world challenges to showcase what truly matters - your abilities.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-              <div className="bg-white dark:bg-blue-800 p-4 rounded shadow-sm">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
+              <div className="bg-white dark:bg-blue-800 p-3 rounded shadow-sm">
                 <p className="text-blue-600 dark:text-blue-200 font-medium">75% faster hiring</p>
               </div>
-              <div className="bg-white dark:bg-blue-800 p-4 rounded shadow-sm">
+              <div className="bg-white dark:bg-blue-800 p-3 rounded shadow-sm">
                 <p className="text-blue-600 dark:text-blue-200 font-medium">90% retention rate</p>
               </div>
-              <div className="bg-white dark:bg-blue-800 p-4 rounded shadow-sm">
+              <div className="bg-white dark:bg-blue-800 p-3 rounded shadow-sm">
                 <p className="text-blue-600 dark:text-blue-200 font-medium">100% skill-focused</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <div key={index} className={getAnimationClass(index)}>
               <FeatureCard
@@ -386,16 +386,16 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Dynamic CTA Section Based on Auth State */}
-      <section className="mb-16">
-        <div className="bg-white shadow-md rounded-xl overflow-hidden">
+      <section className="mb-10">
+        <div className="bg-white dark:bg-blue-950/30 shadow-md rounded-xl overflow-hidden">
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">
+            <div className="md:w-1/2 p-6 md:p-8 lg:p-12 flex flex-col justify-center">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">
                 {user 
                   ? "Ready to Showcase Your Skills?" 
                   : "Ready to Transform Your Career Journey?"}
               </h2>
-              <p className="text-gray-600 mb-8">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 {user 
                   ? "Take on challenges that align with your skills and career goals." 
                   : "Join thousands of professionals who have found meaningful work through skill-based matching."}
@@ -404,12 +404,12 @@ const HomePage: React.FC = () => {
                 {user ? (
                   <>
                     <Link href="/challenges">
-                      <Button className="px-6 py-3 bg-blue-700 text-white font-semibold rounded-md shadow hover:bg-blue-800 transition">
+                      <Button className="px-6 py-3 bg-blue-700 text-white font-semibold rounded-md shadow hover:bg-blue-800 transition transform hover:-translate-y-1">
                         Browse Challenges
                       </Button>
                     </Link>
                     <Link href="/insights">
-                      <Button variant="outline" className="px-6 py-3 border border-blue-300 text-blue-700 dark:text-blue-400 font-semibold rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/40 transition">
+                      <Button variant="outline" className="px-6 py-3 border border-blue-300 text-blue-700 dark:text-blue-400 font-semibold rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/40 transition transform hover:-translate-y-1">
                         View Insights
                       </Button>
                     </Link>
@@ -417,13 +417,13 @@ const HomePage: React.FC = () => {
                 ) : (
                   <>
                     <Button 
-                      className="px-6 py-3 bg-blue-700 text-white font-semibold rounded-md shadow hover:bg-blue-800 transition"
+                      className="px-6 py-3 bg-blue-700 text-white font-semibold rounded-md shadow hover:bg-blue-800 transition transform hover:-translate-y-1"
                       onClick={navigateToAuth}
                     >
                       Create Profile
                     </Button>
                     <Link href="/insights">
-                      <Button variant="outline" className="px-6 py-3 border border-blue-300 text-blue-700 dark:text-blue-400 font-semibold rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/40 transition">
+                      <Button variant="outline" className="px-6 py-3 border border-blue-300 text-blue-700 dark:text-blue-400 font-semibold rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/40 transition transform hover:-translate-y-1">
                         Learn More
                       </Button>
                     </Link>
@@ -437,8 +437,8 @@ const HomePage: React.FC = () => {
                 <h3 className="text-xl font-semibold">Join Our Community</h3>
                 <p className="mt-2 opacity-90">Connect with professionals and companies focused on skills</p>
                 <div className="mt-6 flex justify-center space-x-2">
-                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm shadow-sm border border-blue-400/30">4,500+ Candidates</span>
-                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm shadow-sm border border-blue-400/30">850+ Companies</span>
+                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm shadow-sm border border-blue-400/30 hover:bg-opacity-30 transition-all cursor-pointer">4,500+ Candidates</span>
+                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm shadow-sm border border-blue-400/30 hover:bg-opacity-30 transition-all cursor-pointer">850+ Companies</span>
                 </div>
               </div>
             </div>
@@ -447,10 +447,10 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Improved Testimonials Section with Auto-rotation */}
-      <section className="mb-16">
-        <div className="flex flex-col items-center text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">Success Stories</h2>
-          <p className="text-gray-600 max-w-2xl">Here's how TalentMatch has transformed hiring for both candidates and companies.</p>
+      <section className="mb-10">
+        <div className="flex flex-col items-center text-center mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Success Stories</h2>
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl">Here's how TalentMatch has transformed hiring for both candidates and companies.</p>
         </div>
 
         <div className="relative overflow-hidden">
@@ -485,26 +485,33 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="mb-16">
-        <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 rounded-xl p-8 shadow-inner border border-blue-200 dark:border-blue-800">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-10 text-blue-800 dark:text-blue-200">TalentMatch by the Numbers</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg">
+      <section className="mb-10">
+        <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 rounded-xl p-6 shadow-inner border border-blue-200 dark:border-blue-800">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-blue-800 dark:text-blue-200">TalentMatch by the Numbers</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg border border-blue-100 dark:border-blue-800 hover:shadow-md transition-all transform hover:-translate-y-1">
               <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-300 mb-2">7,500+</div>
               <div className="text-blue-800 dark:text-blue-400">Skill Challenges</div>
             </div>
-            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg">
+            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg border border-blue-100 dark:border-blue-800 hover:shadow-md transition-all transform hover:-translate-y-1">
               <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-300 mb-2">82%</div>
               <div className="text-blue-800 dark:text-blue-400">Hiring Success Rate</div>
             </div>
-            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg">
+            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg border border-blue-100 dark:border-blue-800 hover:shadow-md transition-all transform hover:-translate-y-1">
               <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-300 mb-2">21 Days</div>
               <div className="text-blue-800 dark:text-blue-400">Average Time-to-Hire</div>
             </div>
-            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg">
+            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg border border-blue-100 dark:border-blue-800 hover:shadow-md transition-all transform hover:-translate-y-1">
               <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-300 mb-2">96%</div>
               <div className="text-blue-800 dark:text-blue-400">Employer Satisfaction</div>
             </div>
+          </div>
+          <div className="text-center mt-6">
+            <Link href="/insights">
+              <Button variant="outline" className="border-blue-300 text-blue-700 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition">
+                View Detailed Insights <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
