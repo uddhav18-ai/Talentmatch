@@ -12,31 +12,43 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   
-  /* Apply dark mode styling */
+  /* Apply purple-toned dark mode styling */
   .dark body {
-    @apply bg-gray-900 text-gray-100;
+    @apply bg-purple-950 text-purple-50;
+    background: linear-gradient(to bottom, #2d1b4a, #1a103a);
   }
   
   .dark .card,
   .dark .bg-white {
-    @apply bg-gray-800 text-gray-100;
+    @apply bg-purple-900 text-purple-50;
+    background: linear-gradient(to bottom, #3b2665, #2d1b4a);
   }
   
   .dark .border-gray-200 {
-    @apply border-gray-700;
+    @apply border-purple-800;
   }
   
   .dark .text-gray-700 {
-    @apply text-gray-300;
+    @apply text-purple-200;
   }
   
   .dark .text-gray-600 {
-    @apply text-gray-400;
+    @apply text-purple-300;
   }
   
-  /* Enhance the dark mode UI with subtle accents */
+  /* Enhanced dark mode UI with purple accents */
   .dark .bg-primary {
-    @apply bg-blue-600;
+    @apply bg-violet-600;
+  }
+  
+  .dark button:not(.bg-destructive):not(.bg-secondary) {
+    background: linear-gradient(to right, #6d28d9, #8b5cf6);
+    transition: all 0.3s ease;
+  }
+  
+  .dark button:not(.bg-destructive):not(.bg-secondary):hover {
+    background: linear-gradient(to right, #7c3aed, #a78bfa);
+    transform: translateY(-1px);
   }
 }
 
@@ -44,9 +56,52 @@
 .dark .shadow-sm,
 .dark .shadow,
 .dark .shadow-md {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px 0 rgba(139, 92, 246, 0.2), 0 1px 4px 0 rgba(67, 56, 202, 0.15);
 }
 
 .dark .hover\:shadow-md:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px -1px rgba(139, 92, 246, 0.3), 0 2px 6px -1px rgba(67, 56, 202, 0.2);
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s infinite ease-in-out;
+}
+
+/* Dynamic interactive elements */
+.interactive-card {
+  transition: all 0.3s ease;
+}
+
+.interactive-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.2);
+}
+
+.dark .interactive-card:hover {
+  box-shadow: 0 12px 20px -8px rgba(139, 92, 246, 0.3);
 }

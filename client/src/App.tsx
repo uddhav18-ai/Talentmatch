@@ -10,6 +10,7 @@ import AboutPage from './pages/about-page';
 import ContactPage from './pages/contact-page';
 import ChallengeDetail from './pages/challenge-detail';
 import AuthPage from './pages/auth-page';
+import PostWorkSamplePage from './pages/PostWorkSamplePage';
 import NotFound from './pages/not-found';
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -72,6 +73,11 @@ function AppContent() {
         <Route path="/challenge/:id">
           <ProtectedRoute>
             <ChallengeDetail />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/post-work-sample">
+          <ProtectedRoute>
+            <PostWorkSamplePage />
           </ProtectedRoute>
         </Route>
         <Route>
