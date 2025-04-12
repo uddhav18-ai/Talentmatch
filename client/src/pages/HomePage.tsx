@@ -218,10 +218,16 @@ const HomePage: React.FC = () => {
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold">Featured Challenges</h2>
           <Link href="/challenges">
-            <Button variant="outline" className="text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800">
+            <Button variant="outline" className="text-blue-600 hover:bg-blue-50 dark:text-blue-300 dark:hover:bg-blue-900">
               View All <ArrowRight className="ml-1 h-4 w-4" />
             </Button>
           </Link>
+        </div>
+        <div className="text-center mb-8">
+          <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+            Our challenges are designed by industry experts to assess real-world skills. 
+            Complete them to showcase your abilities and get matched with relevant opportunities.
+          </p>
         </div>
 
         {isLoadingChallenges ? (
