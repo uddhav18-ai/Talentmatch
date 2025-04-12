@@ -319,7 +319,7 @@ const HomePage: React.FC = () => {
                         <div className="flex justify-between items-center">
                           <div className="flex gap-1.5">
                             {['React', 'TypeScript', 'Node.js'].map((skill, i) => (
-                              <span key={i} className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                              <span key={i} className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 border border-blue-200 dark:border-blue-700">
                                 {skill}
                               </span>
                             ))}
@@ -404,12 +404,12 @@ const HomePage: React.FC = () => {
                 {user ? (
                   <>
                     <Link href="/challenges">
-                      <Button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded-md shadow hover:bg-gray-700 transition">
+                      <Button className="px-6 py-3 bg-blue-700 text-white font-semibold rounded-md shadow hover:bg-blue-800 transition">
                         Browse Challenges
                       </Button>
                     </Link>
                     <Link href="/insights">
-                      <Button variant="outline" className="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-md hover:bg-gray-50 transition">
+                      <Button variant="outline" className="px-6 py-3 border border-blue-300 text-blue-700 dark:text-blue-400 font-semibold rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/40 transition">
                         View Insights
                       </Button>
                     </Link>
@@ -417,13 +417,13 @@ const HomePage: React.FC = () => {
                 ) : (
                   <>
                     <Button 
-                      className="px-6 py-3 bg-gray-800 text-white font-semibold rounded-md shadow hover:bg-gray-700 transition"
+                      className="px-6 py-3 bg-blue-700 text-white font-semibold rounded-md shadow hover:bg-blue-800 transition"
                       onClick={navigateToAuth}
                     >
                       Create Profile
                     </Button>
                     <Link href="/insights">
-                      <Button variant="outline" className="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-md hover:bg-gray-50 transition">
+                      <Button variant="outline" className="px-6 py-3 border border-blue-300 text-blue-700 dark:text-blue-400 font-semibold rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/40 transition">
                         Learn More
                       </Button>
                     </Link>
@@ -431,14 +431,14 @@ const HomePage: React.FC = () => {
                 )}
               </div>
             </div>
-            <div className="md:w-1/2 bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center p-8">
+            <div className="md:w-1/2 bg-gradient-to-br from-blue-700 to-blue-900 dark:from-blue-800 dark:to-blue-950 flex items-center justify-center p-8">
               <div className="text-white text-center">
-                <i className="fas fa-users-cog text-6xl mb-4"></i>
+                <i className="fas fa-users-cog text-6xl mb-4 text-blue-200"></i>
                 <h3 className="text-xl font-semibold">Join Our Community</h3>
                 <p className="mt-2 opacity-90">Connect with professionals and companies focused on skills</p>
                 <div className="mt-6 flex justify-center space-x-2">
-                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">4,500+ Candidates</span>
-                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">850+ Companies</span>
+                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm shadow-sm border border-blue-400/30">4,500+ Candidates</span>
+                  <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm shadow-sm border border-blue-400/30">850+ Companies</span>
                 </div>
               </div>
             </div>
@@ -474,7 +474,7 @@ const HomePage: React.FC = () => {
               <button
                 key={index}
                 className={`w-3 h-3 rounded-full transition-colors ${
-                  activeTestimonial === index ? 'bg-gray-700 dark:bg-gray-300' : 'bg-gray-300 dark:bg-gray-700'
+                  activeTestimonial === index ? 'bg-blue-600 dark:bg-blue-400' : 'bg-blue-200 dark:bg-blue-800'
                 }`}
                 onClick={() => setActiveTestimonial(index)}
                 aria-label={`View testimonial ${index + 1}`}
@@ -486,24 +486,24 @@ const HomePage: React.FC = () => {
 
       {/* Stats Section */}
       <section className="mb-16">
-        <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-8 shadow-inner">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">TalentMatch by the Numbers</h2>
+        <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 rounded-xl p-8 shadow-inner border border-blue-200 dark:border-blue-800">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-10 text-blue-800 dark:text-blue-200">TalentMatch by the Numbers</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">7,500+</div>
-              <div className="text-gray-600">Skill Challenges</div>
+            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg">
+              <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-300 mb-2">7,500+</div>
+              <div className="text-blue-800 dark:text-blue-400">Skill Challenges</div>
             </div>
-            <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">82%</div>
-              <div className="text-gray-600">Hiring Success Rate</div>
+            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg">
+              <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-300 mb-2">82%</div>
+              <div className="text-blue-800 dark:text-blue-400">Hiring Success Rate</div>
             </div>
-            <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">21 Days</div>
-              <div className="text-gray-600">Average Time-to-Hire</div>
+            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg">
+              <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-300 mb-2">21 Days</div>
+              <div className="text-blue-800 dark:text-blue-400">Average Time-to-Hire</div>
             </div>
-            <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">96%</div>
-              <div className="text-gray-600">Employer Satisfaction</div>
+            <div className="flex flex-col items-center p-4 bg-white/50 dark:bg-blue-900/50 rounded-lg">
+              <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-300 mb-2">96%</div>
+              <div className="text-blue-800 dark:text-blue-400">Employer Satisfaction</div>
             </div>
           </div>
         </div>

@@ -77,12 +77,12 @@ const CompaniesPage: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {benefits.map((benefit, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-6 hover:border-primary hover:shadow-md transition-all">
-                <div className={`rounded-full ${benefit.iconBgColor} w-12 h-12 flex items-center justify-center mb-4`}>
+              <div key={index} className="border border-blue-200 dark:border-blue-800 rounded-lg p-6 hover:border-blue-500 hover:shadow-md transition-all bg-gradient-to-br from-white to-blue-50 dark:from-blue-950 dark:to-blue-900">
+                <div className={`rounded-full ${benefit.iconBgColor} w-12 h-12 flex items-center justify-center mb-4 shadow-sm`}>
                   <i className={`${benefit.icon} text-xl`}></i>
                 </div>
-                <h3 className="font-semibold text-lg mb-2">{benefit.title}</h3>
-                <p className="text-gray-600">{benefit.description}</p>
+                <h3 className="font-semibold text-lg mb-2 text-blue-700 dark:text-blue-300">{benefit.title}</h3>
+                <p className="text-gray-700 dark:text-gray-300">{benefit.description}</p>
               </div>
             ))}
           </div>
