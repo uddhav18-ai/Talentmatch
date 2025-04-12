@@ -267,7 +267,25 @@ const HomePage: React.FC = () => {
       <section className="mb-16">
         <div className="flex flex-col items-center text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">How We're Different</h2>
-          <p className="text-gray-600 max-w-2xl">Traditional hiring is broken. We've built a new approach that focuses on skills and potential, not keywords and credentials.</p>
+          <p className="text-gray-600 max-w-2xl mb-4">Traditional hiring is broken. We've built a new approach that focuses on skills and potential, not keywords and credentials.</p>
+          <div className="max-w-3xl mx-auto bg-blue-50 dark:bg-blue-900 p-6 rounded-lg border-l-4 border-blue-500 mb-8">
+            <h3 className="text-xl font-semibold text-blue-700 dark:text-blue-300 mb-2">Our Unique Approach</h3>
+            <p className="text-gray-700 dark:text-gray-300">
+              We've reimagined the hiring process from the ground up. Our platform uses blind skill assessments to eliminate bias,
+              AI-powered matching to connect talent with opportunities, and real-world challenges to showcase what truly matters - your abilities.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+              <div className="bg-white dark:bg-blue-800 p-4 rounded shadow-sm">
+                <p className="text-blue-600 dark:text-blue-200 font-medium">75% faster hiring</p>
+              </div>
+              <div className="bg-white dark:bg-blue-800 p-4 rounded shadow-sm">
+                <p className="text-blue-600 dark:text-blue-200 font-medium">90% retention rate</p>
+              </div>
+              <div className="bg-white dark:bg-blue-800 p-4 rounded shadow-sm">
+                <p className="text-blue-600 dark:text-blue-200 font-medium">100% skill-focused</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

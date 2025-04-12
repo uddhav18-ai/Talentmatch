@@ -247,30 +247,30 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="min-w-[200px] animate-fade-in animate-slide-up">
-                    <DropdownMenuLabel>
+                    <DropdownMenuLabel className="bg-blue-500 text-white dark:bg-blue-800">
                       {userRole ? `${userRole.charAt(0).toUpperCase() + userRole.slice(1)} Account` : 'Your Account'}
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem 
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900 dark:hover:text-blue-300"
                       onClick={() => setLocation(`/profile`)}
                     >
                       <User className="h-4 w-4 mr-2" /> My Profile
                     </DropdownMenuItem>
                     <DropdownMenuItem 
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900 dark:hover:text-blue-300"
                       onClick={() => setLocation(`/user/dashboard`)}
                     >
                       <BarChartIcon className="h-4 w-4 mr-2" /> My Dashboard
                     </DropdownMenuItem>
                     <DropdownMenuItem 
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900 dark:hover:text-blue-300"
                       onClick={() => setLocation(`/user/submissions`)}
                     >
                       <PenToolIcon className="h-4 w-4 mr-2" /> My Submissions
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer text-red-600 dark:text-red-400" onClick={handleLogout}>
+                    <DropdownMenuItem className="cursor-pointer text-blue-600 dark:text-blue-400 hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-900 dark:hover:text-blue-300" onClick={handleLogout}>
                       <LogOut className="h-4 w-4 mr-2" /> Log Out
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -388,7 +388,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 
                 <Button
                   variant="ghost"
-                  className="block w-full text-left px-4 py-2 text-red-600 dark:text-red-400 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:hover:bg-gray-800"
+                  className="block w-full text-left px-4 py-2 text-blue-600 dark:text-blue-400 font-medium hover:bg-blue-400 hover:text-white rounded-md transition-all duration-300 dark:hover:bg-blue-700 dark:hover:text-white"
                   onClick={handleLogout}
                 >
                   <LogOut className="h-4 w-4 mr-2 inline" /> 
@@ -400,7 +400,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               <>
                 <Button
                   variant="ghost"
-                  className="block w-full text-left px-4 py-2 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
+                  className="block w-full text-left px-4 py-2 text-white font-medium hover:bg-blue-400 rounded-md transition-all duration-300 dark:text-white dark:hover:bg-blue-700"
                   onClick={handleSignIn}
                 >
                   Sign In
@@ -408,7 +408,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <Link href="/auth?tab=register">
                   <Button
                     variant="default"
-                    className="block w-full mt-1 px-4 py-2 bg-gray-800 text-white font-medium hover:bg-gray-600 rounded-md transition-all duration-300"
+                    className="block w-full mt-1 px-4 py-2 bg-blue-700 text-white font-medium hover:bg-blue-800 rounded-md transition-all duration-300"
                   >
                     Join Now
                   </Button>
