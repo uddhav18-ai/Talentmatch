@@ -19,7 +19,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card
 import { ScrollArea } from '../ui/scroll-area';
 import { Badge } from '../ui/badge';
 import { Input } from '../ui/input';
-import { Tooltip } from '../ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { useAuth } from '@/hooks/use-auth';
@@ -297,7 +297,7 @@ export default function Chatbot() {
   };
 
   return (
-    <>
+    <TooltipProvider>
       {/* Chat button */}
       <div className="fixed bottom-6 right-6 z-50">
         <Button
@@ -335,23 +335,33 @@ export default function Chatbot() {
                 )}
                 TalentMatch Assistant
                 {aiMode && (
-                  <Tooltip content="AI Mode Enabled">
-                    <span className="inline-flex ml-2">
-                      <Sparkles className="h-4 w-4 text-yellow-500 animate-pulse" />
-                    </span>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <span className="inline-flex ml-2">
+                        <Sparkles className="h-4 w-4 text-yellow-500 animate-pulse" />
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>AI Mode Enabled</p>
+                    </TooltipContent>
                   </Tooltip>
                 )}
               </CardTitle>
               <div className="flex space-x-1">
-                <Tooltip content={aiMode ? "Disable AI Mode" : "Enable AI Mode"}>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className={`h-8 w-8 p-0 ${aiMode ? 'text-yellow-500' : ''}`} 
-                    onClick={toggleAiMode}
-                  >
-                    <Sparkles className="h-4 w-4" />
-                  </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className={`h-8 w-8 p-0 ${aiMode ? 'text-yellow-500' : ''}`} 
+                      onClick={toggleAiMode}
+                    >
+                      <Sparkles className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{aiMode ? "Disable AI Mode" : "Enable AI Mode"}</p>
+                  </TooltipContent>
                 </Tooltip>
                 <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => setIsOpen(false)}>
                   <ChevronDown className="h-4 w-4" />
@@ -563,6 +573,6 @@ export default function Chatbot() {
           </CardFooter>
         </Card>
       )}
-    </>
+    </TooltipProvider>
   );
 }

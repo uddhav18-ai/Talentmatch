@@ -1,7 +1,14 @@
 import React from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 
 const Footer: React.FC = () => {
+  const [location, setLocation] = useLocation();
+  
+  const handleLinkClick = (path: string) => {
+    setLocation(path);
+    window.scrollTo(0, 0);
+  };
+  
   return (
     <footer className="bg-neutral-dark text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,10 +61,10 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Company</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Our Mission</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Blog</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+              <li><a onClick={() => handleLinkClick('/about')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">About Us</a></li>
+              <li><a onClick={() => handleLinkClick('/about')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Our Mission</a></li>
+              <li><a onClick={() => handleLinkClick('/about')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Blog</a></li>
+              <li><a onClick={() => handleLinkClick('/contact')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Contact</a></li>
             </ul>
           </div>
         </div>
