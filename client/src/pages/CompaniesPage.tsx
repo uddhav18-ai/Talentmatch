@@ -3,8 +3,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import WorkSampleForm from '../components/companies/WorkSampleForm';
 import Testimonial from '../components/home/Testimonial';
+import { Link, useLocation } from 'wouter';
 
 const CompaniesPage: React.FC = () => {
+  const [_, setLocation] = useLocation();
+  
+  const navigateToEmployerSignup = () => {
+    setLocation('/auth?type=employer');
+  };
   const benefits = [
     {
       icon: 'fas fa-clock text-blue-600 dark:text-blue-400',
@@ -67,7 +73,13 @@ const CompaniesPage: React.FC = () => {
     <div className="mb-12 animate-fade-in">
       <div className="max-w-4xl mx-auto text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">For Companies</h1>
-        <p className="text-xl text-gray-600">Find candidates who can truly do the job, not just talk about it. Reduce hiring time and improve retention.</p>
+        <p className="text-xl text-gray-600 mb-6">Find candidates who can truly do the job, not just talk about it. Reduce hiring time and improve retention.</p>
+        <Button 
+          onClick={navigateToEmployerSignup}
+          className="px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 font-semibold rounded-md shadow-md transform transition hover:scale-105"
+        >
+          Join Now
+        </Button>
       </div>
 
       {/* Benefits Section */}
@@ -175,8 +187,11 @@ const CompaniesPage: React.FC = () => {
           </div>
           
           <div className="mt-8 text-center">
-            <Button className="px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-blue-600 transition-colors shadow-sm">
-              Create Employer Account
+            <Button 
+              onClick={navigateToEmployerSignup}
+              className="px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-blue-600 transition-colors shadow-sm"
+            >
+              Join Now
             </Button>
           </div>
         </CardContent>
