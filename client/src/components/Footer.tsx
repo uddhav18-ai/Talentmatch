@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">For Candidates</h3>
             <ul className="space-y-2">
-              <li><Link href="/challenges"><a className="text-gray-400 hover:text-white transition-colors">Browse Challenges</a></Link></li>
+              <li><Link href="/challenges" className="text-gray-400 hover:text-white transition-colors">Browse Challenges</Link></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Skill Verification</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Success Stories</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Career Resources</a></li>
@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">For Companies</h3>
             <ul className="space-y-2">
-              <li><Link href="/companies"><a className="text-gray-400 hover:text-white transition-colors">Post Work Samples</a></Link></li>
+              <li><Link href="/companies" className="text-gray-400 hover:text-white transition-colors">Post Work Samples</Link></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Talent Search</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Enterprise Solutions</a></li>
