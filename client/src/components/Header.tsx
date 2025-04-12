@@ -281,7 +281,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               <div className="hidden md:flex items-center space-x-2">
                 <Button
                   variant="ghost"
-                  className="px-4 py-2 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
+                  className="px-4 py-2 text-white font-medium hover:bg-blue-500 rounded-md transition-all duration-300 dark:text-white dark:hover:bg-blue-700"
                   onClick={handleSignIn}
                 >
                   Sign In
@@ -289,7 +289,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <Link href="/auth?tab=register">
                   <Button
                     variant="default"
-                    className="px-4 py-2 bg-gray-800 text-white font-medium hover:bg-gray-600 rounded-md transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105"
+                    className="px-4 py-2 bg-blue-700 text-white font-medium hover:bg-blue-800 rounded-md transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105"
                   >
                     Join Now
                   </Button>
@@ -303,23 +303,23 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               className="md:hidden p-2 rounded-md"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              <Menu className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+              <Menu className="h-5 w-5 text-white dark:text-white" />
             </Button>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden bg-white dark:bg-gray-950 shadow-lg absolute w-full animate-fade-in ${mobileMenuOpen ? 'block' : 'hidden'}`}>
+      <div className={`md:hidden bg-blue-500 dark:bg-blue-800 shadow-lg absolute w-full animate-fade-in ${mobileMenuOpen ? 'block' : 'hidden'}`}>
         <div className="px-4 py-2 space-y-1">
           {allNavItems.map(item => (
             <Button
               key={item.id}
               variant="ghost"
-              className={`block w-full text-left px-4 py-2 font-medium rounded-md hover:bg-gray-100 transition-all duration-300 dark:hover:bg-gray-800 ${
+              className={`block w-full text-left px-4 py-2 font-medium rounded-md hover:bg-blue-400 transition-all duration-300 dark:hover:bg-blue-700 ${
                 activeTab === item.id 
-                  ? 'bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200' 
-                  : 'text-gray-700 dark:text-gray-300'
+                  ? 'bg-white text-blue-600 dark:bg-blue-950 dark:text-white' 
+                  : 'text-white dark:text-white'
               }`}
               onClick={() => {
                 // Handle items with direct paths (employer actions)
@@ -343,8 +343,8 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               // Mobile logged in state
               <>
                 <div className="px-4 py-2 flex items-center">
-                  <User className="h-4 w-4 mr-2 text-gray-800 dark:text-gray-400" />
-                  <span className="font-medium dark:text-gray-200">
+                  <User className="h-4 w-4 mr-2 text-white dark:text-white" />
+                  <span className="font-medium text-white dark:text-white">
                     {user.username}
                     {userRole && <span className="ml-2 text-xs opacity-75">({userRole})</span>}
                   </span>
@@ -352,7 +352,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 
                 <Button
                   variant="ghost"
-                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
+                  className="block w-full text-left px-4 py-2 text-white font-medium hover:bg-blue-400 rounded-md transition-all duration-300 dark:text-white dark:hover:bg-blue-700"
                   onClick={() => {
                     setLocation(`/profile`);
                     setMobileMenuOpen(false);
@@ -364,7 +364,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 
                 <Button
                   variant="ghost"
-                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
+                  className="block w-full text-left px-4 py-2 text-white font-medium hover:bg-blue-400 rounded-md transition-all duration-300 dark:text-white dark:hover:bg-blue-700"
                   onClick={() => {
                     setLocation(`/user/dashboard`);
                     setMobileMenuOpen(false);
@@ -376,7 +376,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 
                 <Button
                   variant="ghost"
-                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-gray-300 dark:hover:bg-gray-800"
+                  className="block w-full text-left px-4 py-2 text-white font-medium hover:bg-blue-400 rounded-md transition-all duration-300 dark:text-white dark:hover:bg-blue-700"
                   onClick={() => {
                     setLocation(`/user/submissions`);
                     setMobileMenuOpen(false);
