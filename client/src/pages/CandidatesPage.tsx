@@ -303,28 +303,53 @@ router.post('/resources', auth, async (req, res) => {
             </div>
             
             <div className="flex-1 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:border-primary hover:shadow-md transition-all duration-300 bg-white dark:bg-gray-800">
-              <div className="rounded-full bg-blue-100 dark:bg-blue-900 w-12 h-12 flex items-center justify-center mb-4">
-                <span className="text-primary dark:text-blue-400 font-bold">3</span>
+              <div className="rounded-full bg-purple-100 dark:bg-purple-900/50 w-12 h-12 flex items-center justify-center mb-4">
+                <span className="text-purple-600 dark:text-purple-400 font-bold">3</span>
               </div>
               <h3 className="font-semibold text-lg mb-2 dark:text-white">Get Matched</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">Our AI algorithm matches your verified skills with opportunities that fit your abilities.</p>
               
-              <div className="relative h-40 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center overflow-hidden">
+              <div className="relative h-40 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-lg flex items-center justify-center overflow-hidden group">
                 <div className="absolute w-full h-full flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center z-10">
-                    <User className="h-8 w-8 text-primary dark:text-blue-400" />
+                  {/* User circle with pulsating effect */}
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-r from-purple-100 to-purple-200 dark:from-purple-800/60 dark:to-purple-700/60 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
+                    <User className="h-8 w-8 text-purple-600 dark:text-purple-400 group-hover:animate-bounce transition-all" />
                   </div>
-                  <div className="absolute w-full h-0.5 bg-blue-200 dark:bg-blue-700">
-                    <div className="absolute right-1/2 w-2/5 h-0.5 bg-blue-400 dark:bg-blue-500 animate-pulse"></div>
+                  
+                  {/* Connecting line with flowing animation */}
+                  <div className="absolute w-full h-1 bg-gradient-to-r from-purple-200 to-blue-200 dark:from-purple-700 dark:to-blue-700">
+                    <div className="absolute left-1/2 w-1/4 h-1 bg-gradient-to-r from-purple-400 to-blue-400 dark:from-purple-500 dark:to-blue-500 animate-[flow_3s_ease-in-out_infinite]"></div>
                   </div>
-                  <div className="absolute right-8 w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center z-10">
-                    <Building className="h-7 w-7 text-secondary dark:text-indigo-400" />
+                  
+                  {/* Company circle */}
+                  <div className="absolute right-8 w-16 h-16 rounded-full bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-800/60 dark:to-blue-700/60 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110">
+                    <Building className="h-7 w-7 text-blue-600 dark:text-blue-400 group-hover:animate-pulse transition-all" />
+                  </div>
+                  
+                  {/* Animated particles */}
+                  <div className="absolute w-full h-full pointer-events-none">
+                    <div className="absolute left-1/4 top-1/4 w-2 h-2 rounded-full bg-purple-400 dark:bg-purple-500 animate-[float_4s_ease-in-out_infinite]"></div>
+                    <div className="absolute left-2/3 top-2/3 w-1.5 h-1.5 rounded-full bg-blue-400 dark:bg-blue-500 animate-[float_3s_ease-in-out_infinite_0.5s]"></div>
+                    <div className="absolute left-1/2 top-1/3 w-1 h-1 rounded-full bg-indigo-400 dark:bg-indigo-500 animate-[float_5s_ease-in-out_infinite_1s]"></div>
                   </div>
                 </div>
-                <div className="z-20 text-center">
-                  <span className="text-sm font-medium text-blue-800 dark:text-blue-300">AI Matching</span>
+                
+                {/* Match score with animation */}
+                <div className="z-20 flex flex-col items-center transition-all group-hover:translate-y-[-10px]">
+                  <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-4 py-2 rounded-lg shadow-sm mb-2">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">AI Matching Score</span>
+                  </div>
+                  <div className="w-16 h-16 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm flex items-center justify-center shadow-sm group-hover:scale-110 transition-all">
+                    <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">87%</span>
+                  </div>
                 </div>
               </div>
+              
+              <Button 
+                className="w-full mt-4 flex items-center justify-center gap-2 transition-all duration-300 hover:translate-y-[-2px] bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+              >
+                <Eye className="h-4 w-4" /> View Matches
+              </Button>
             </div>
           </div>
         </CardContent>

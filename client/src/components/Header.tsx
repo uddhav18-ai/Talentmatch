@@ -91,8 +91,8 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   
   // Employer-specific actions
   const employerActions = [
-    { id: 'post-job', label: 'Post a Job', icon: <FileTextIcon className="h-4 w-4 mr-2" /> },
-    { id: 'post-work-sample', label: 'Post Work Sample', icon: <Package className="h-4 w-4 mr-2" /> },
+    { id: 'post-job', label: 'Post a Job', icon: <FileTextIcon className="h-4 w-4 mr-2" />, path: '/post-job' },
+    { id: 'post-work-sample', label: 'Post Work Sample', icon: <Package className="h-4 w-4 mr-2" />, path: '/post-work-sample' },
   ];
   
   // Secondary navigation items
@@ -186,7 +186,14 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     <DropdownMenuItem 
                       key={action.id}
                       className="cursor-pointer"
-                      onClick={() => handleTabClick(action.id)}
+                      onClick={() => {
+                        if (action.path) {
+                          setLocation(action.path);
+                          setMobileMenuOpen(false);
+                        } else {
+                          handleTabClick(action.id);
+                        }
+                      }}
                     >
                       <div className="flex items-center py-1">
                         {action.icon}
@@ -305,7 +312,15 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   ? 'bg-blue-50 text-primary dark:bg-purple-800/50 dark:text-purple-200' 
                   : 'text-gray-700 dark:text-purple-200'
               }`}
-              onClick={() => handleTabClick(item.id)}
+              onClick={() => {
+                // Handle items with direct paths (employer actions)
+                if ('path' in item && item.path) {
+                  setLocation(item.path);
+                  setMobileMenuOpen(false);
+                } else {
+                  handleTabClick(item.id);
+                }
+              }}
             >
               <div className="flex items-center">
                 {item.icon && <span className="mr-2">{item.icon}</span>}
