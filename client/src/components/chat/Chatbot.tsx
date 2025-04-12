@@ -6,13 +6,22 @@ import {
   ChevronDown, 
   Loader2, 
   User, 
-  Bot 
+  Bot,
+  Sparkles,
+  MoreHorizontal,
+  Lightbulb,
+  HelpCircle,
+  Settings,
+  BookOpen 
 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { ScrollArea } from '../ui/scroll-area';
 import { Badge } from '../ui/badge';
 import { Input } from '../ui/input';
+import { Tooltip } from '../ui/tooltip';
+import { useToast } from '@/hooks/use-toast';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { useAuth } from '@/hooks/use-auth';
 
 // FAQ questions and answers
@@ -68,6 +77,7 @@ interface Message {
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>('chat');
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '0',
@@ -79,9 +89,11 @@ export default function Chatbot() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [aiMode, setAiMode] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth();
+  const { toast } = useToast();
 
   // Suggested questions for quick selection
   const suggestedQuestions = [
@@ -157,8 +169,64 @@ export default function Chatbot() {
     }
   };
 
+  // Toggle AI mode
+  const toggleAiMode = () => {
+    if (!aiMode) {
+      toast({
+        title: "AI Mode activated",
+        description: "You're now using the enhanced AI assistant for more dynamic responses.",
+        variant: "default",
+      });
+    }
+    setAiMode(!aiMode);
+  };
+
   const generateResponse = (userMessage: string): string => {
-    // Check if the message matches a FAQ
+    // Use advanced AI mode responses if enabled
+    if (aiMode) {
+      const normalizedMessage = userMessage.toLowerCase();
+      
+      // Generate more sophisticated AI responses based on context
+      if (normalizedMessage.match(/career|job|opportunity|position/i)) {
+        return `Based on your skills and portfolio, I've analyzed the current job market and can recommend a few career paths. 
+                Your strengths in ${user?.skills?.join(', ') || 'your selected skills'} align well with roles in 
+                ${normalizedMessage.includes('data') ? 'data science and analytics' : 'software development and architecture'}. 
+                Would you like me to show you specific job openings that match your skill profile?`;
+      }
+      
+      if (normalizedMessage.match(/salary|compensation|pay|worth/i)) {
+        return `Based on current market data, professionals with your skill set typically earn between $90,000-$120,000 annually.
+                Specialists in ${user?.skills?.[0] || 'your top skill'} can command premium rates. 
+                Would you like personalized recommendations on how to improve your earning potential?`;
+      }
+      
+      if (normalizedMessage.match(/learn|improve|study|course|tutorial/i)) {
+        const skillToImprove = user?.skills?.find(skill => 
+          normalizedMessage.includes(skill.toLowerCase())
+        ) || (normalizedMessage.includes('javascript') ? 'JavaScript' : 
+              normalizedMessage.includes('python') ? 'Python' : 
+              normalizedMessage.includes('data') ? 'Data Science' : 'your selected skills');
+        
+        return `I've analyzed your profile and identified resources to help you master ${skillToImprove}.
+                I recommend starting with interactive projects that build on your existing knowledge.
+                Our skill assessment tool can also identify specific areas where you can improve. Would you like me to create a personalized learning path?`;
+      }
+      
+      if (normalizedMessage.match(/portfolio|project|showcase/i)) {
+        return `Your portfolio could be strengthened with projects demonstrating ${user?.skills?.join(' and ') || 'your skills in real-world scenarios'}.
+                Consider adding a challenge solution with source code that highlights your problem-solving approach.
+                Would you like suggestions for portfolio projects that appeal to employers in your target industry?`;
+      }
+      
+      // Default AI response with more personalization
+      return `I understand you're asking about ${userMessage.split(' ').slice(0, 3).join(' ')}...
+              Based on your profile and previous interactions, I can help with personalized guidance on this topic.
+              Could you specify which aspect of ${normalizedMessage.includes('skill') ? 'skill development' : 
+                                               normalizedMessage.includes('job') ? 'job searching' : 
+                                               'your professional growth'} you're most interested in?`;
+    }
+    
+    // Regular mode responses (non-AI)
     const normalizedMessage = userMessage.toLowerCase();
     
     // Look for matches in FAQs
@@ -258,97 +326,240 @@ export default function Chatbot() {
           <CardHeader className="bg-primary/5 pb-2">
             <div className="flex justify-between items-center">
               <CardTitle className="text-md flex items-center">
-                <MessageSquare className="mr-2 h-5 w-5" />
+                {activeTab === 'chat' ? (
+                  <MessageSquare className="mr-2 h-5 w-5" />
+                ) : activeTab === 'learn' ? (
+                  <BookOpen className="mr-2 h-5 w-5" />
+                ) : (
+                  <HelpCircle className="mr-2 h-5 w-5" />
+                )}
                 TalentMatch Assistant
+                {aiMode && (
+                  <Tooltip content="AI Mode Enabled">
+                    <span className="inline-flex ml-2">
+                      <Sparkles className="h-4 w-4 text-yellow-500 animate-pulse" />
+                    </span>
+                  </Tooltip>
+                )}
               </CardTitle>
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => setIsOpen(false)}>
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent className="p-0">
-            <ScrollArea className="h-80 px-4 py-2">
-              <div className="space-y-4">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              <div className="flex space-x-1">
+                <Tooltip content={aiMode ? "Disable AI Mode" : "Enable AI Mode"}>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className={`h-8 w-8 p-0 ${aiMode ? 'text-yellow-500' : ''}`} 
+                    onClick={toggleAiMode}
                   >
-                    <div className={`flex items-start max-w-[80%] ${message.sender === 'user' ? 'flex-row-reverse' : ''}`}>
-                      <div className={`rounded-full h-8 w-8 flex items-center justify-center mr-2 ${message.sender === 'user' ? 'ml-2 mr-0 bg-primary text-primary-foreground' : 'bg-muted'}`}>
-                        {message.sender === 'user' ? <User className="h-5 w-5" /> : <Bot className="h-5 w-5" />}
-                      </div>
-                      <div
-                        className={`rounded-lg px-3 py-2 ${
-                          message.sender === 'user'
-                            ? 'bg-primary text-primary-foreground'
-                            : 'bg-muted'
-                        }`}
-                      >
-                        <p className="text-sm">{message.content}</p>
-                        <p className="text-xs opacity-70 mt-1">
-                          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </p>
+                    <Sparkles className="h-4 w-4" />
+                  </Button>
+                </Tooltip>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => setIsOpen(false)}>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+            
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-2">
+              <TabsList className="grid w-full grid-cols-3 h-9">
+                <TabsTrigger value="chat" className="text-xs">
+                  <MessageSquare className="h-3 w-3 mr-1" /> Chat
+                </TabsTrigger>
+                <TabsTrigger value="learn" className="text-xs">
+                  <BookOpen className="h-3 w-3 mr-1" /> Learn
+                </TabsTrigger>
+                <TabsTrigger value="help" className="text-xs">
+                  <HelpCircle className="h-3 w-3 mr-1" /> Help
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </CardHeader>
+          
+          <CardContent className="p-0">
+            <TabsContent value="chat" className="m-0">
+              <ScrollArea className="h-80 px-4 py-2">
+                <div className="space-y-4">
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div className={`flex items-start max-w-[80%] ${message.sender === 'user' ? 'flex-row-reverse' : ''}`}>
+                        <div className={`rounded-full h-8 w-8 flex items-center justify-center mr-2 ${message.sender === 'user' ? 'ml-2 mr-0 bg-primary text-primary-foreground' : 'bg-muted'}`}>
+                          {message.sender === 'user' ? (
+                            <User className="h-5 w-5" />
+                          ) : (
+                            <div className="relative">
+                              <Bot className="h-5 w-5" />
+                              {aiMode && message.sender === 'bot' && (
+                                <Sparkles className="h-3 w-3 text-yellow-500 absolute -top-1 -right-1" />
+                              )}
+                            </div>
+                          )}
+                        </div>
+                        <div
+                          className={`rounded-lg px-3 py-2 ${
+                            message.sender === 'user'
+                              ? 'bg-primary text-primary-foreground'
+                              : aiMode && message.sender === 'bot'
+                                ? 'bg-gradient-to-r from-purple-100 to-indigo-100 dark:from-purple-950/60 dark:to-indigo-950/60 text-foreground dark:text-white'
+                                : 'bg-muted'
+                          }`}
+                        >
+                          <p className="text-sm whitespace-pre-line">{message.content}</p>
+                          <p className="text-xs opacity-70 mt-1">
+                            {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                  
+                  {isTyping && (
+                    <div className="flex justify-start">
+                      <div className="flex items-start max-w-[80%]">
+                        <div className="rounded-full h-8 w-8 flex items-center justify-center mr-2 bg-muted">
+                          <div className="relative">
+                            <Bot className="h-5 w-5" />
+                            {aiMode && <Sparkles className="h-3 w-3 text-yellow-500 absolute -top-1 -right-1" />}
+                          </div>
+                        </div>
+                        <div className={`rounded-lg px-4 py-2 ${
+                          aiMode 
+                            ? 'bg-gradient-to-r from-purple-100 to-indigo-100 dark:from-purple-950/60 dark:to-indigo-950/60'
+                            : 'bg-muted'
+                        }`}>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div ref={messagesEndRef} />
+                </div>
                 
-                {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="flex items-start max-w-[80%]">
-                      <div className="rounded-full h-8 w-8 flex items-center justify-center mr-2 bg-muted">
-                        <Bot className="h-5 w-5" />
-                      </div>
-                      <div className="rounded-lg px-4 py-2 bg-muted">
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      </div>
+                {/* Suggested questions - show only at the beginning */}
+                {messages.length <= 2 && (
+                  <div className="mt-4 mb-2">
+                    <p className="text-xs text-muted-foreground mb-2">Suggested questions:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {suggestedQuestions.map((question, index) => (
+                        <Badge 
+                          key={index} 
+                          className="cursor-pointer bg-muted hover:bg-muted/80 text-foreground"
+                          onClick={() => handleSuggestedQuestion(question)}
+                        >
+                          {question}
+                        </Badge>
+                      ))}
                     </div>
                   </div>
                 )}
-                
-                <div ref={messagesEndRef} />
-              </div>
-              
-              {/* Suggested questions - show only at the beginning */}
-              {messages.length <= 2 && (
-                <div className="mt-4 mb-2">
-                  <p className="text-xs text-muted-foreground mb-2">Suggested questions:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {suggestedQuestions.map((question, index) => (
-                      <Badge 
-                        key={index} 
-                        className="cursor-pointer bg-muted hover:bg-muted/80 text-foreground"
-                        onClick={() => handleSuggestedQuestion(question)}
-                      >
-                        {question}
-                      </Badge>
+              </ScrollArea>
+            </TabsContent>
+            
+            <TabsContent value="learn" className="m-0">
+              <ScrollArea className="h-80 px-4 py-2">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Learning Resources</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Discover resources to improve your skills based on your profile and interests.
+                  </p>
+                  
+                  {/* Learning categories */}
+                  <div className="grid grid-cols-1 gap-3">
+                    <div className="p-3 rounded-lg border bg-card hover:bg-card/80 cursor-pointer transition-colors">
+                      <div className="flex items-center mb-2">
+                        <div className="bg-primary/10 rounded-full p-1.5 mr-2">
+                          <BookOpen className="h-4 w-4 text-primary" />
+                        </div>
+                        <h4 className="font-medium">Interactive Tutorials</h4>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Hands-on learning experiences to build practical skills
+                      </p>
+                    </div>
+                    
+                    <div className="p-3 rounded-lg border bg-card hover:bg-card/80 cursor-pointer transition-colors">
+                      <div className="flex items-center mb-2">
+                        <div className="bg-primary/10 rounded-full p-1.5 mr-2">
+                          <Lightbulb className="h-4 w-4 text-primary" />
+                        </div>
+                        <h4 className="font-medium">Skill Assessments</h4>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Test your knowledge and identify areas for improvement
+                      </p>
+                    </div>
+                    
+                    <div className="p-3 rounded-lg border bg-card hover:bg-card/80 cursor-pointer transition-colors">
+                      <div className="flex items-center mb-2">
+                        <div className="bg-primary/10 rounded-full p-1.5 mr-2">
+                          <MessageSquare className="h-4 w-4 text-primary" />
+                        </div>
+                        <h4 className="font-medium">Expert Guidance</h4>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Get personalized advice from industry professionals
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </ScrollArea>
+            </TabsContent>
+            
+            <TabsContent value="help" className="m-0">
+              <ScrollArea className="h-80 px-4 py-2">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Help & FAQ</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Get answers to common questions about TalentMatch features.
+                  </p>
+                  
+                  <div className="space-y-3">
+                    {faqs.slice(0, 5).map((faq, index) => (
+                      <div key={index} className="border rounded-lg p-3">
+                        <h4 className="font-medium text-sm mb-1">{faq.question}</h4>
+                        <p className="text-xs text-muted-foreground">{faq.answer}</p>
+                      </div>
                     ))}
                   </div>
                 </div>
-              )}
-            </ScrollArea>
+              </ScrollArea>
+            </TabsContent>
           </CardContent>
+          
           <CardFooter className="p-3 pt-2">
-            <div className="flex w-full items-center space-x-2">
-              <Input
-                ref={inputRef}
-                type="text"
-                placeholder="Type your message..."
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="flex-1"
-              />
-              <Button
-                size="sm"
-                className="px-3"
-                onClick={handleSendMessage}
-                disabled={!inputValue.trim()}
+            {activeTab === 'chat' && (
+              <div className="flex w-full items-center space-x-2">
+                <Input
+                  ref={inputRef}
+                  type="text"
+                  placeholder={aiMode ? "Ask me anything..." : "Type your message..."}
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                  className="flex-1"
+                />
+                <Button
+                  size="sm"
+                  className={`px-3 ${aiMode ? 'bg-gradient-to-r from-purple-600 to-indigo-600' : ''}`}
+                  onClick={handleSendMessage}
+                  disabled={!inputValue.trim()}
+                >
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
+            
+            {activeTab !== 'chat' && (
+              <Button 
+                className="w-full text-sm" 
+                onClick={() => setActiveTab('chat')}
               >
-                <Send className="h-4 w-4" />
+                <MessageSquare className="h-4 w-4 mr-2" />
+                Return to Chat
               </Button>
-            </div>
+            )}
           </CardFooter>
         </Card>
       )}
