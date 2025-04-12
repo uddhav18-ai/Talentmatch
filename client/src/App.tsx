@@ -7,6 +7,8 @@ import CompaniesPage from './pages/CompaniesPage';
 import ChallengesPage from './pages/ChallengesPage';
 import InsightsPage from './pages/InsightsPage';
 import ProfilePage from './pages/ProfilePage';
+import DashboardPage from './pages/DashboardPage';
+import SubmissionsPage from './pages/SubmissionsPage';
 import AboutPage from './pages/about-page';
 import ContactPage from './pages/contact-page';
 import ChallengeDetail from './pages/challenge-detail';
@@ -84,6 +86,16 @@ function AppContent() {
         <Route path="/profile">
           <ProtectedRoute>
             <ProfilePage />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/dashboard">
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/submissions">
+          <ProtectedRoute>
+            <SubmissionsPage />
           </ProtectedRoute>
         </Route>
         <Route>
