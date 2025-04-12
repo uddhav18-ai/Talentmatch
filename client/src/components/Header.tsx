@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { useLocation } from 'wouter';
+import { useAuth } from '@/hooks/use-auth';
+import { LogOut, User, Menu } from 'lucide-react';
 
 interface HeaderProps {
   activeTab: string;
@@ -10,11 +11,22 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
+  const { user, logoutMutation } = useAuth();
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
     setLocation(`/${tab === 'home' ? '' : tab}`);
+    setMobileMenuOpen(false);
+  };
+
+  const handleSignIn = () => {
+    setLocation('/auth');
+    setMobileMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    logoutMutation.mutate();
     setMobileMenuOpen(false);
   };
 
@@ -58,26 +70,49 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
 
           {/* Auth Buttons */}
           <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              className="hidden md:block px-4 py-2 text-primary font-medium hover:bg-blue-50 rounded-md transition-colors"
-            >
-              Sign In
-            </Button>
-            <Button
-              variant="default"
-              className="hidden md:block px-4 py-2 bg-primary text-white font-medium hover:bg-blue-600 rounded-md transition-colors shadow-sm"
-            >
-              Join Now
-            </Button>
+            {user ? (
+              // Logged in state
+              <div className="hidden md:flex items-center">
+                <span className="mr-3 text-gray-700">
+                  <span className="font-medium">{user.username}</span>
+                </span>
+                <Button
+                  variant="ghost"
+                  className="px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-colors"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="h-4 w-4 mr-1" /> 
+                  Log Out
+                </Button>
+              </div>
+            ) : (
+              // Logged out state
+              <div className="hidden md:flex items-center space-x-2">
+                <Button
+                  variant="ghost"
+                  className="px-4 py-2 text-primary font-medium hover:bg-blue-50 rounded-md transition-colors"
+                  onClick={handleSignIn}
+                >
+                  Sign In
+                </Button>
+                <Link href="/auth?tab=register">
+                  <Button
+                    variant="default"
+                    className="px-4 py-2 bg-primary text-white font-medium hover:bg-blue-600 rounded-md transition-colors shadow-sm"
+                  >
+                    Join Now
+                  </Button>
+                </Link>
+              </div>
+            )}
 
             {/* Mobile Menu Button */}
             <Button
               variant="ghost"
-              className="md:hidden bg-neutral-light p-2 rounded-md"
+              className="md:hidden p-2 rounded-md"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              <i className="fas fa-bars text-neutral-dark"></i>
+              <Menu className="h-5 w-5 text-gray-700" />
             </Button>
           </div>
         </div>
@@ -99,18 +134,42 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             </Button>
           ))}
           <div className="pt-2 border-t border-gray-200 mt-2">
-            <Button
-              variant="ghost"
-              className="block w-full text-left px-4 py-2 text-primary font-medium hover:bg-blue-50 rounded-md transition-colors"
-            >
-              Sign In
-            </Button>
-            <Button
-              variant="default"
-              className="block w-full mt-1 px-4 py-2 bg-primary text-white font-medium hover:bg-blue-600 rounded-md transition-colors"
-            >
-              Join Now
-            </Button>
+            {user ? (
+              // Mobile logged in state
+              <>
+                <div className="px-4 py-2 flex items-center">
+                  <User className="h-4 w-4 mr-2 text-primary" />
+                  <span className="font-medium">{user.username}</span>
+                </div>
+                <Button
+                  variant="ghost"
+                  className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-colors"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="h-4 w-4 mr-2 inline" /> 
+                  Log Out
+                </Button>
+              </>
+            ) : (
+              // Mobile logged out state
+              <>
+                <Button
+                  variant="ghost"
+                  className="block w-full text-left px-4 py-2 text-primary font-medium hover:bg-blue-50 rounded-md transition-colors"
+                  onClick={handleSignIn}
+                >
+                  Sign In
+                </Button>
+                <Link href="/auth?tab=register">
+                  <Button
+                    variant="default"
+                    className="block w-full mt-1 px-4 py-2 bg-primary text-white font-medium hover:bg-blue-600 rounded-md transition-colors"
+                  >
+                    Join Now
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

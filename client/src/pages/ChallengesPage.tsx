@@ -1,82 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'wouter';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import ChallengeCard from '../components/challenges/ChallengeCard';
+import { Challenge } from '@shared/schema';
+import { useQuery } from '@tanstack/react-query';
+import { Loader2 } from 'lucide-react';
 
 const ChallengesPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('all');
+  const [filteredChallenges, setFilteredChallenges] = useState<Challenge[]>([]);
 
-  const categories = [
-    { id: 'all', name: 'All Challenges' },
-    { id: 'development', name: 'Development' },
-    { id: 'design', name: 'Design' },
-    { id: 'data', name: 'Data Analysis' },
-    { id: 'marketing', name: 'Marketing' },
-    { id: 'product', name: 'Product Management' }
-  ];
-
-  const challenges = [
-    {
-      category: 'Front-End',
-      categoryColor: 'blue',
-      title: 'Responsive Web Dashboard',
-      description: 'Build a responsive dashboard that displays user analytics data with filtering options.',
-      skills: ['HTML/CSS', 'JavaScript', 'Responsive Design', 'Data Visualization'],
-      timeEstimate: '45-60 min',
-      completions: 432,
-      accentColor: 'bg-primary'
-    },
-    {
-      category: 'UX Design',
-      categoryColor: 'green',
-      title: 'Mobile App Onboarding Flow',
-      description: 'Design an intuitive onboarding experience for a health tracking mobile application.',
-      skills: ['UI Design', 'UX Principles', 'Figma', 'Mobile Design'],
-      timeEstimate: '90-120 min',
-      completions: 289,
-      accentColor: 'bg-secondary'
-    },
-    {
-      category: 'Data Analysis',
-      categoryColor: 'indigo',
-      title: 'Customer Segmentation Analysis',
-      description: 'Analyze customer data to identify key segments and provide actionable recommendations.',
-      skills: ['Data Analysis', 'Python', 'SQL', 'Data Visualization'],
-      timeEstimate: '60-75 min',
-      completions: 176,
-      accentColor: 'bg-accent'
-    },
-    {
-      category: 'Marketing',
-      categoryColor: 'red',
-      title: 'Campaign Strategy & Execution',
-      description: 'Develop a comprehensive marketing strategy for a new product launch, including channel selection and budget allocation.',
-      skills: ['Marketing Strategy', 'Campaign Planning', 'Budget Management', 'Analytics'],
-      timeEstimate: '60-90 min',
-      completions: 201,
-      accentColor: 'bg-status-error'
-    },
-    {
-      category: 'Product Management',
-      categoryColor: 'yellow',
-      title: 'Product Roadmap & Prioritization',
-      description: 'Develop a product roadmap and prioritize features based on user needs, business goals, and technical constraints.',
-      skills: ['Product Strategy', 'Prioritization', 'User Research', 'Roadmapping'],
-      timeEstimate: '90-120 min',
-      completions: 155,
-      accentColor: 'bg-status-warning'
-    },
-    {
-      category: 'Back-End',
-      categoryColor: 'blue',
-      title: 'API Design & Implementation',
-      description: 'Design and implement a RESTful API for a resource management system with authentication and authorization.',
-      skills: ['API Design', 'Node.js', 'Database Design', 'Security'],
-      timeEstimate: '60-90 min',
-      completions: 312,
-      accentColor: 'bg-primary'
+  // Fetch challenges from the API
+  const { data: challenges, isLoading, error } = useQuery({
+    queryKey: ['/api/challenges'],
+    queryFn: async () => {
+      const response = await fetch('/api/challenges');
+      if (!response.ok) {
+        throw new Error('Failed to fetch challenges');
+      }
+      return response.json();
     }
-  ];
+  });
+
+  // Extract unique categories from challenges
+  const uniqueCategories = challenges 
+    ? ['all', ...new Set(challenges.map((challenge: Challenge) => challenge.category))]
+    : ['all'];
+  
+  const categories = uniqueCategories.map(cat => ({
+    id: cat === 'all' ? 'all' : cat.toLowerCase().replace(/\s+/g, '-'),
+    name: cat === 'all' ? 'All Challenges' : cat
+  }));
+
+  // Filter challenges when activeCategory changes
+  useEffect(() => {
+    if (!challenges) return;
+    
+    if (activeCategory === 'all') {
+      setFilteredChallenges(challenges);
+    } else {
+      const categoryName = categories.find(cat => cat.id === activeCategory)?.name;
+      setFilteredChallenges(challenges.filter((challenge: Challenge) => 
+        challenge.category === categoryName
+      ));
+    }
+  }, [challenges, activeCategory, categories]);
+
+  // Map challenge difficulty to a color
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty.toLowerCase()) {
+      case 'beginner': return 'green';
+      case 'intermediate': return 'blue';
+      case 'advanced': return 'red';
+      default: return 'blue';
+    }
+  };
+
+  // Map challenge category to a color
+  const getCategoryColor = (category: string) => {
+    if (category.toLowerCase().includes('web')) return 'blue';
+    if (category.toLowerCase().includes('data')) return 'indigo';
+    if (category.toLowerCase().includes('mobile')) return 'green';
+    if (category.toLowerCase().includes('backend')) return 'red';
+    if (category.toLowerCase().includes('database')) return 'yellow';
+    return 'purple';
+  };
 
   const creatorBenefits = [
     {
@@ -98,6 +87,30 @@ const ChallengesPage: React.FC = () => {
       description: 'Gain recognition as a challenge creator and establish yourself as an industry expert.'
     }
   ];
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-4xl mx-auto text-center py-12">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">
+          Error loading challenges
+        </h1>
+        <p className="text-gray-600 mb-6">
+          We couldn't load the challenges. Please try again later.
+        </p>
+        <Button onClick={() => window.location.reload()}>
+          Retry
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="mb-12 animate-fade-in">
@@ -126,18 +139,21 @@ const ChallengesPage: React.FC = () => {
 
       {/* Challenge Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {challenges.map((challenge, index) => (
-          <ChallengeCard
-            key={index}
-            category={challenge.category}
-            categoryColor={challenge.categoryColor}
-            title={challenge.title}
-            description={challenge.description}
-            skills={challenge.skills}
-            timeEstimate={challenge.timeEstimate}
-            completions={challenge.completions}
-            accentColor={challenge.accentColor}
-          />
+        {filteredChallenges.map((challenge: Challenge) => (
+          <Link key={challenge.id} href={`/challenge/${challenge.id}`}>
+            <a className="cursor-pointer">
+              <ChallengeCard
+                category={challenge.category}
+                categoryColor={getCategoryColor(challenge.category)}
+                title={challenge.title}
+                description={challenge.description}
+                skills={challenge.skills}
+                timeEstimate={challenge.timeEstimate}
+                completions={challenge.completions || 0}
+                accentColor={`bg-${getDifficultyColor(challenge.difficulty)}-500`}
+              />
+            </a>
+          </Link>
         ))}
       </div>
 
@@ -183,9 +199,11 @@ const ChallengesPage: React.FC = () => {
                   <span className="text-gray-500 text-sm">Time Estimate:</span>
                   <span className="font-medium ml-1">3-5 hours</span>
                 </div>
-                <Button className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-md hover:bg-purple-700 transition-colors shadow-sm">
-                  Start Challenge
-                </Button>
+                <Link href="/challenge/featured">
+                  <Button className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-md hover:bg-purple-700 transition-colors shadow-sm">
+                    Start Challenge
+                  </Button>
+                </Link>
               </div>
             </div>
             
@@ -231,9 +249,11 @@ const ChallengesPage: React.FC = () => {
               <h2 className="text-2xl font-bold">Create Your Own Challenge</h2>
               <p className="text-gray-600">Share your expertise by creating challenges that test real-world skills in your domain.</p>
             </div>
-            <Button className="mt-4 md:mt-0 px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-blue-600 transition-colors shadow-sm">
-              Submit a Challenge
-            </Button>
+            <Link href="/auth">
+              <Button className="mt-4 md:mt-0 px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-blue-600 transition-colors shadow-sm">
+                Submit a Challenge
+              </Button>
+            </Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -1,50 +1,68 @@
 import { useState, useEffect } from 'react';
+import { Switch, Route, useLocation } from 'wouter';
 import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
 import CandidatesPage from './pages/CandidatesPage';
 import CompaniesPage from './pages/CompaniesPage';
 import ChallengesPage from './pages/ChallengesPage';
 import InsightsPage from './pages/InsightsPage';
+import ChallengeDetail from './pages/challenge-detail';
+import AuthPage from './pages/auth-page';
 import NotFound from './pages/not-found';
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
-import { useLocation } from 'wouter';
+import { AuthProvider } from './hooks/use-auth';
+import { ProtectedRoute } from './lib/protected-route';
 import './lib/animations.css';
 
-function App() {
+function AppContent() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const [location] = useLocation();
 
   useEffect(() => {
     // Extract tab from URL path if it exists
-    const path = location.slice(1) || 'home';
+    let path = location.slice(1).split('/')[0] || 'home';
+    
+    // Special cases where we don't want to update the active tab
+    if (path === 'challenge' || path === 'auth') return;
+    
     setActiveTab(path);
   }, [location]);
 
-  const getContent = () => {
-    switch (activeTab) {
-      case 'home':
-        return <HomePage />;
-      case 'candidates':
-        return <CandidatesPage />;
-      case 'companies':
-        return <CompaniesPage />;
-      case 'challenges':
-        return <ChallengesPage />;
-      case 'insights':
-        return <InsightsPage />;
-      default:
-        return <NotFound />;
-    }
-  };
+  return (
+    <MainLayout activeTab={activeTab} setActiveTab={setActiveTab}>
+      <Switch>
+        <Route path="/" component={HomePage} />
+        <Route path="/candidates" component={CandidatesPage} />
+        <Route path="/companies" component={CompaniesPage} />
+        <Route path="/challenges" component={ChallengesPage} />
+        <Route path="/insights" component={InsightsPage} />
+        <Route path="/auth">
+          <AuthPage />
+        </Route>
+        <Route path="/challenge/:id">
+          {(params) => (
+            <ProtectedRoute>
+              <ChallengeDetail />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
+    </MainLayout>
+  );
+}
 
+function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <MainLayout activeTab={activeTab} setActiveTab={setActiveTab}>
-        {getContent()}
-      </MainLayout>
-      <Toaster />
+      <AuthProvider>
+        <AppContent />
+        <Toaster />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
