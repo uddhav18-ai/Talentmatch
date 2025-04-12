@@ -6,6 +6,8 @@ import CandidatesPage from './pages/CandidatesPage';
 import CompaniesPage from './pages/CompaniesPage';
 import ChallengesPage from './pages/ChallengesPage';
 import InsightsPage from './pages/InsightsPage';
+import AboutPage from './pages/about-page';
+import ContactPage from './pages/contact-page';
 import ChallengeDetail from './pages/challenge-detail';
 import AuthPage from './pages/auth-page';
 import NotFound from './pages/not-found';
@@ -13,12 +15,14 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from './hooks/use-auth';
+import { ThemeProvider } from './hooks/use-theme';
 import { ProtectedRoute } from './lib/protected-route';
 import './lib/animations.css';
 
 function AppContent() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const [location] = useLocation();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     // Extract tab from URL path if it exists
@@ -30,23 +34,44 @@ function AppContent() {
     setActiveTab(path);
   }, [location]);
 
+  // Mark app as loaded after a short delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-16 h-16 border-4 border-primary border-solid rounded-full border-t-transparent animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
     <MainLayout activeTab={activeTab} setActiveTab={setActiveTab}>
       <Switch>
         <Route path="/" component={HomePage} />
         <Route path="/candidates" component={CandidatesPage} />
         <Route path="/companies" component={CompaniesPage} />
-        <Route path="/challenges" component={ChallengesPage} />
+        <Route path="/about" component={AboutPage} />
+        <Route path="/contact" component={ContactPage} />
         <Route path="/insights" component={InsightsPage} />
         <Route path="/auth">
           <AuthPage />
         </Route>
+        {/* Protected routes that require authentication */}
+        <Route path="/challenges">
+          <ProtectedRoute>
+            <ChallengesPage />
+          </ProtectedRoute>
+        </Route>
         <Route path="/challenge/:id">
-          {(params) => (
-            <ProtectedRoute>
-              <ChallengeDetail />
-            </ProtectedRoute>
-          )}
+          <ProtectedRoute>
+            <ChallengeDetail />
+          </ProtectedRoute>
         </Route>
         <Route>
           <NotFound />
@@ -59,10 +84,12 @@ function AppContent() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <AppContent />
-        <Toaster />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AppContent />
+          <Toaster />
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
