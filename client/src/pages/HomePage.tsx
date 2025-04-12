@@ -250,7 +250,7 @@ const HomePage: React.FC = () => {
           </Card>
         ) : challenges.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {challenges.slice(0, 6).map((challenge, index) => (
+            {challenges.slice(0, 3).map((challenge, index) => (
               <Link key={challenge.id} href={`/challenge/${challenge.id}`}>
                 <Card className="h-full hover:shadow-lg transition-all cursor-pointer border-2 border-transparent hover:border-blue-500">
                   <CardContent className="p-6">
@@ -351,8 +351,8 @@ const HomePage: React.FC = () => {
           </div>
           
           {/* Advanced User Flow Diagram */}
-          <div className="max-w-6xl mx-auto mb-12 mt-10">
-            <h3 className="text-xl font-bold text-center mb-8">Advanced User Flow Diagram</h3>
+          <div className="max-w-6xl mx-auto mb-4">
+            <h3 className="text-xl font-bold text-center mb-6">Advanced User Flow Diagram</h3>
             
             <div className="relative bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-6 rounded-xl border border-blue-200 dark:border-blue-700 overflow-hidden">
               {/* Background Grid Pattern */}
