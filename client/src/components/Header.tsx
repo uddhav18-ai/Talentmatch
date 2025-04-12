@@ -60,14 +60,14 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link href="/">
-            <a className="flex items-center space-x-2 cursor-pointer" onClick={() => handleTabClick('home')}>
+          <div className="cursor-pointer" onClick={() => handleTabClick('home')}>
+            <div className="flex items-center space-x-2">
               <div className="bg-primary text-white p-1.5 rounded">
                 <i className="fas fa-bolt text-xl"></i>
               </div>
               <span className="text-xl font-bold text-gray-900 dark:text-white">TalentMatch</span>
-            </a>
-          </Link>
+            </div>
+          </div>
 
           {/* Desktop Navigation - Primary Items */}
           <nav className="hidden md:flex space-x-1">
