@@ -33,8 +33,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       <p className="text-gray-600 flex-grow">{description}</p>
       <Link href={route}>
         <Button 
-          variant="ghost" 
-          className="mt-4 text-primary font-medium flex items-center justify-start p-0 hover:bg-transparent hover:text-blue-700 group"
+          className="mt-4 bg-blue-600 text-white font-medium flex items-center hover:bg-blue-700 group"
         >
           {buttonText}
           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
