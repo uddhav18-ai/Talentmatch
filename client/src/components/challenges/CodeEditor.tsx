@@ -5,7 +5,7 @@ import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { python } from '@codemirror/lang-python';
 import { sql } from '@codemirror/lang-sql';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Save, Clock, Play, Pause, RotateCcw } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '../ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../ui/tabs';
@@ -14,6 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useMutation } from '@tanstack/react-query';
+import { Alert, AlertDescription } from '../ui/alert';
 
 const languageOptions = [
   { value: 'javascript', label: 'JavaScript', extension: () => javascript() },
@@ -41,12 +42,50 @@ export default function CodeEditor({
   const [code, setCode] = useState(initialCode);
   const [language, setLanguage] = useState(initialLanguage);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const { toast } = useToast();
   const { user } = useAuth();
+  
+  // Default time limit for challenges - 2 hours (7200 seconds)
+  const MAX_TIME = 7200;
+  const [countdownTimer, setCountdownTimer] = useState<{ active: boolean; timeLeft: number; interval?: NodeJS.Timeout }>({
+    active: false,
+    timeLeft: MAX_TIME,
+  });
+  
+  // For tracking time spent (up counter)
   const [timer, setTimer] = useState<{ active: boolean; time: number; interval?: NodeJS.Timeout }>({
     active: false,
     time: 0,
   });
+
+  // Load saved draft when component mounts
+  useEffect(() => {
+    if (user) {
+      const savedDraft = localStorage.getItem(`draft_challenge_${challengeId}_${user.id}`);
+      if (savedDraft) {
+        try {
+          const draft = JSON.parse(savedDraft);
+          setCode(draft.code);
+          setLanguage(draft.language);
+          setLastSaved(new Date(draft.timestamp));
+          
+          // If there's time remaining from a previous session, restore it
+          if (draft.timeLeft && draft.timeLeft > 0) {
+            setCountdownTimer(prev => ({ ...prev, timeLeft: draft.timeLeft }));
+          }
+          
+          toast({
+            title: "Draft loaded",
+            description: "Your previous work has been restored",
+          });
+        } catch (e) {
+          console.error("Error loading draft:", e);
+        }
+      }
+    }
+  }, [challengeId, user]);
 
   const languageExtension = languageOptions.find(lang => lang.value === language)?.extension || javascript;
 
@@ -82,36 +121,123 @@ export default function CodeEditor({
     }
   });
 
-  // Format time as mm:ss
-  const formatTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  // Format time as mm:ss or hh:mm:ss
+  const formatTime = (seconds: number, includeHours = false): string => {
+    if (includeHours || seconds >= 3600) {
+      const hours = Math.floor(seconds / 3600);
+      const mins = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+      return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    } else {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
   };
 
-  // Start/Stop timer
+  // Save draft functionality
+  const saveDraft = () => {
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to save your draft",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const draftData = {
+        code,
+        language,
+        timestamp: new Date().toISOString(),
+        timeLeft: countdownTimer.timeLeft,
+      };
+      
+      localStorage.setItem(`draft_challenge_${challengeId}_${user.id}`, JSON.stringify(draftData));
+      setLastSaved(new Date());
+      
+      toast({
+        title: "Draft saved",
+        description: "Your progress has been saved",
+      });
+    } catch (e) {
+      console.error("Error saving draft:", e);
+      toast({
+        title: "Error saving draft",
+        description: "There was a problem saving your progress",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Auto-save every 2 minutes
+  useEffect(() => {
+    if (user && code !== initialCode) {
+      const autoSaveInterval = setInterval(() => {
+        saveDraft();
+      }, 2 * 60 * 1000);
+      
+      return () => clearInterval(autoSaveInterval);
+    }
+  }, [user, code, language, challengeId]);
+
+  // Start/Stop timer and countdown
   const toggleTimer = () => {
+    // Toggle both the time tracker and the countdown
     if (timer.active) {
-      // Stop timer
-      if (timer.interval) {
-        clearInterval(timer.interval);
-      }
+      // Stop timers
+      if (timer.interval) clearInterval(timer.interval);
+      if (countdownTimer.interval) clearInterval(countdownTimer.interval);
+      
       setTimer(prev => ({ ...prev, active: false, interval: undefined }));
+      setCountdownTimer(prev => ({ ...prev, active: false, interval: undefined }));
     } else {
-      // Start timer
-      const interval = setInterval(() => {
+      // Start time tracker (counting up)
+      const upInterval = setInterval(() => {
         setTimer(prev => ({ ...prev, time: prev.time + 1 }));
       }, 1000);
-      setTimer(prev => ({ ...prev, active: true, interval }));
+      
+      // Start countdown timer (counting down)
+      const downInterval = setInterval(() => {
+        setCountdownTimer(prev => {
+          const newTimeLeft = Math.max(0, prev.timeLeft - 1);
+          
+          // When countdown reaches zero
+          if (newTimeLeft === 0 && prev.timeLeft > 0) {
+            clearInterval(downInterval);
+            toast({
+              title: "Time's up!",
+              description: "Your time limit has been reached. Submit your solution now.",
+              variant: "destructive",
+            });
+            return { ...prev, active: false, timeLeft: 0, interval: undefined };
+          }
+          
+          return { ...prev, timeLeft: newTimeLeft };
+        });
+      }, 1000);
+      
+      setTimer(prev => ({ ...prev, active: true, interval: upInterval }));
+      setCountdownTimer(prev => ({ ...prev, active: true, interval: downInterval }));
     }
   };
 
   // Reset timer
   const resetTimer = () => {
-    if (timer.interval) {
-      clearInterval(timer.interval);
-    }
+    if (timer.interval) clearInterval(timer.interval);
+    if (countdownTimer.interval) clearInterval(countdownTimer.interval);
+    
     setTimer({ active: false, time: 0 });
+    setCountdownTimer({ active: false, timeLeft: MAX_TIME });
+    
+    toast({
+      title: "Timers reset",
+      description: "Both timers have been reset to their initial values.",
+    });
   };
 
   // Submit code solution
@@ -147,34 +273,79 @@ export default function CodeEditor({
     };
   }, [timer.interval]);
 
+  // Clear draft in localStorage after successful submission
+  useEffect(() => {
+    if (user && submitMutation.isSuccess) {
+      localStorage.removeItem(`draft_challenge_${challengeId}_${user.id}`);
+    }
+  }, [submitMutation.isSuccess, challengeId, user]);
+
   return (
     <Card className="w-full max-w-5xl mx-auto mb-6">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Code Editor</CardTitle>
-        <div className="flex items-center space-x-4">
-          <div className="text-lg font-mono font-bold" data-testid="timer">
-            {formatTime(timer.time)}
+      <CardHeader className="flex flex-col space-y-2">
+        <div className="flex flex-row items-center justify-between">
+          <CardTitle>Code Editor</CardTitle>
+          
+          {/* Timer Controls */}
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleTimer}
+              className="flex items-center gap-1"
+              data-testid="timer-toggle"
+            >
+              {timer.active ? (
+                <><Pause className="h-4 w-4" /> Pause</>
+              ) : (
+                <><Play className="h-4 w-4" /> Start</>
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={resetTimer}
+              className="flex items-center gap-1"
+              data-testid="timer-reset"
+            >
+              <RotateCcw className="h-4 w-4" /> Reset
+            </Button>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={toggleTimer}
-            data-testid="timer-toggle"
-          >
-            {timer.active ? 'Pause' : 'Start'} Timer
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={resetTimer}
-            data-testid="timer-reset"
-          >
-            Reset
-          </Button>
         </div>
+        
+        {/* Timer Display */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 bg-gray-50 dark:bg-gray-900 rounded-md p-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <Clock className="h-4 w-4 text-blue-600" />
+              <span className="text-sm font-medium">Time Elapsed:</span>
+            </div>
+            <div className="text-xl font-mono font-bold text-blue-600" data-testid="up-timer">
+              {formatTime(timer.time)}
+            </div>
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <Clock className="h-4 w-4 text-red-600" />
+              <span className="text-sm font-medium">Time Remaining:</span>
+            </div>
+            <div className={`text-xl font-mono font-bold ${countdownTimer.timeLeft < 300 ? 'text-red-600 animate-pulse' : 'text-red-600'}`} data-testid="down-timer">
+              {formatTime(countdownTimer.timeLeft, true)}
+            </div>
+          </div>
+        </div>
+        
+        {/* Last saved info */}
+        {lastSaved && (
+          <div className="text-xs text-gray-500 text-right">
+            Last saved: {lastSaved.toLocaleTimeString()}
+          </div>
+        )}
       </CardHeader>
+      
       <CardContent>
-        <div className="mb-4">
+        <div className="flex flex-col md:flex-row justify-between mb-4 gap-2 items-start md:items-center">
           <Select
             value={language}
             onValueChange={(value) => setLanguage(value)}
@@ -191,7 +362,25 @@ export default function CodeEditor({
               ))}
             </SelectContent>
           </Select>
+          
+          {/* Save Draft Button */}
+          {!readOnly && user && (
+            <Button 
+              variant="outline"
+              size="sm"
+              onClick={saveDraft}
+              disabled={isSaving || code === initialCode}
+              className="flex items-center gap-1"
+            >
+              {isSaving ? (
+                <><Loader2 className="h-4 w-4 animate-spin" /> Saving...</>
+              ) : (
+                <><Save className="h-4 w-4" /> Save Draft</>
+              )}
+            </Button>
+          )}
         </div>
+        
         <div className="border rounded-md overflow-hidden">
           <CodeMirror
             value={code}
@@ -224,7 +413,15 @@ export default function CodeEditor({
             }}
           />
         </div>
+        
+        {/* Auto-save notice */}
+        {user && !readOnly && (
+          <div className="mt-2 text-xs text-gray-500 flex items-center gap-1">
+            <Save className="h-3 w-3" /> Your code is automatically saved every 2 minutes
+          </div>
+        )}
       </CardContent>
+      
       {!readOnly && (
         <CardFooter className="justify-end space-x-2">
           <Button variant="outline" onClick={() => setCode(initialCode)} disabled={isSubmitting}>

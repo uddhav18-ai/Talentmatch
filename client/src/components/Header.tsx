@@ -188,7 +188,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                       className="cursor-pointer"
                       onClick={() => {
                         if (action.path) {
-                          setLocation(action.path);
+                          setLocation(action.path as string);
                           setMobileMenuOpen(false);
                         } else {
                           handleTabClick(action.id);
@@ -315,7 +315,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               onClick={() => {
                 // Handle items with direct paths (employer actions)
                 if ('path' in item && item.path) {
-                  setLocation(item.path);
+                  setLocation(item.path as string);
                   setMobileMenuOpen(false);
                 } else {
                   handleTabClick(item.id);
