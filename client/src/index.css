@@ -13,39 +13,39 @@
     background: linear-gradient(to bottom, #f8fafc, #ffffff);
   }
   
-  /* Light mode styling with blue and white gradient */
+  /* Light mode styling - neutral with high contrast */
   .card,
   .bg-white {
-    background: linear-gradient(to bottom, #f0f9ff, #ffffff);
-    box-shadow: 0 4px 15px -3px rgba(191, 219, 254, 0.2), 0 2px 8px -2px rgba(191, 219, 254, 0.15);
+    background: #ffffff;
+    box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.1), 0 2px 8px -2px rgba(0, 0, 0, 0.05);
   }
   
   /* Button styling for light mode */
   button:not(.bg-destructive):not(.bg-secondary) {
-    background: linear-gradient(to right, #3b82f6, #60a5fa);
+    background: #333333;
     transition: all 0.3s ease;
   }
   
   button:not(.bg-destructive):not(.bg-secondary):hover {
-    background: linear-gradient(to right, #2563eb, #3b82f6);
+    background: #555555;
     transform: translateY(-1px);
   }
   
-  /* Apply mid-purple dark mode styling with improved text clarity */
+  /* Dark mode styling - neutral dark with high contrast */
   .dark body {
-    @apply bg-purple-950 text-gray-50;
-    background: linear-gradient(to bottom, #4a3a6e, #372b52);
+    @apply bg-gray-950 text-gray-50;
+    background: #111111;
   }
   
   .dark .card,
   .dark .bg-white {
-    @apply bg-purple-900 text-gray-50;
-    background: linear-gradient(to bottom, #53418a, #4a3a6e);
-    box-shadow: 0 4px 12px -2px rgba(30, 20, 60, 0.3);
+    @apply bg-gray-900 text-gray-50;
+    background: #222222;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.5);
   }
   
   .dark .border-gray-200 {
-    @apply border-purple-700;
+    @apply border-gray-700;
   }
   
   .dark .text-gray-700 {
@@ -56,11 +56,11 @@
     @apply text-gray-200;
   }
   
-  /* Make text sharper in dark mode */
+  /* Make text sharper in dark mode with higher contrast */
   .dark h1, .dark h2, .dark h3, .dark h4 {
     @apply text-white;
     letter-spacing: 0.01em;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   }
   
   .dark p, .dark li, .dark span {
@@ -68,41 +68,53 @@
     letter-spacing: 0.01em;
   }
   
-  /* Replace blue with mid-purple in dark mode */
-  .dark .text-blue-800 {
-    @apply text-gray-50;
+  /* Color overrides for both light and dark mode to remove blue/purple */
+  .text-blue-800, .dark .text-blue-800,
+  .text-blue-700, .dark .text-blue-700,
+  .text-blue-600, .dark .text-blue-600,
+  .text-blue-500, .dark .text-blue-500,
+  .text-blue-400, .dark .text-blue-400 {
+    @apply text-gray-800;
   }
   
-  .dark .text-blue-300, .dark .text-blue-400, .dark .text-blue-500, .dark .text-blue-600 {
-    @apply text-purple-300;
+  .dark .text-blue-800, 
+  .dark .text-blue-700,
+  .dark .text-blue-600, 
+  .dark .text-blue-500, 
+  .dark .text-blue-400 {
+    @apply text-gray-200;
   }
   
-  .dark .bg-blue-100 {
-    @apply bg-purple-800/40;
+  .bg-blue-100, .dark .bg-blue-100,
+  .bg-blue-50, .dark .bg-blue-50,
+  .bg-purple-800, .dark .bg-purple-800,
+  .bg-purple-900, .dark .bg-purple-900 {
+    @apply bg-gray-100;
   }
   
-  .dark .bg-blue-900 {
-    @apply bg-purple-800;
+  .dark .bg-blue-100,
+  .dark .bg-blue-50,
+  .dark .bg-purple-800,
+  .dark .bg-purple-900 {
+    @apply bg-gray-800;
   }
   
-  /* Replace blue gradients with purple in dark mode */
-  .dark .from-blue-700, .dark .to-blue-700,
-  .dark .from-blue-800, .dark .to-blue-700 {
-    @apply from-purple-600 to-purple-700;
+  /* Enhanced UI elements */
+  .bg-primary, .dark .bg-primary {
+    @apply bg-gray-800;
   }
   
-  /* Enhanced dark mode UI with purple accents */
   .dark .bg-primary {
-    @apply bg-purple-600;
+    @apply bg-gray-700;
   }
   
   .dark button:not(.bg-destructive):not(.bg-secondary) {
-    background: linear-gradient(to right, #9333ea, #a855f7);
+    background: #444444;
     transition: all 0.3s ease;
   }
   
   .dark button:not(.bg-destructive):not(.bg-secondary):hover {
-    background: linear-gradient(to right, #a855f7, #c084fc);
+    background: #666666;
     transform: translateY(-1px);
   }
 }
@@ -111,31 +123,31 @@
 .shadow-sm,
 .shadow,
 .shadow-md {
-  box-shadow: 0 2px 6px 0 rgba(59, 130, 246, 0.2), 0 1px 4px 0 rgba(59, 130, 246, 0.1);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 4px 0 rgba(0, 0, 0, 0.06);
 }
 
 .hover\:shadow-md:hover {
-  box-shadow: 0 4px 8px -1px rgba(59, 130, 246, 0.25), 0 2px 6px -1px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.1), 0 2px 6px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Custom dark mode styles that can't use @apply */
 .dark .shadow-sm,
 .dark .shadow,
 .dark .shadow-md {
-  box-shadow: 0 2px 6px 0 rgba(147, 51, 234, 0.15), 0 1px 4px 0 rgba(147, 51, 234, 0.1);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3), 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .dark .hover\:shadow-md:hover {
-  box-shadow: 0 4px 8px -1px rgba(147, 51, 234, 0.25), 0 2px 6px -1px rgba(147, 51, 234, 0.2);
+  box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.4), 0 2px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
 /* Hero section background in light mode */
 .hero-gradient {
-  background: linear-gradient(to right, #3b82f6, #60a5fa, #93c5fd);
+  background: linear-gradient(to right, #444444, #666666, #888888);
 }
 
 .dark .hero-gradient {
-  background: linear-gradient(to right, #6d28d9, #7e22ce, #9333ea);
+  background: linear-gradient(to right, #222222, #333333, #444444);
 }
 
 /* Animation utilities */
@@ -178,5 +190,5 @@
 }
 
 .dark .interactive-card:hover {
-  box-shadow: 0 12px 20px -8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.5);
 }

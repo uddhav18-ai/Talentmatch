@@ -111,7 +111,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <header className="sticky top-0 bg-white dark:bg-purple-950 shadow-sm z-50 transition-all duration-300 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95">
+    <header className="sticky top-0 bg-white dark:bg-gray-950 shadow-sm z-50 transition-all duration-300 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
@@ -120,10 +120,10 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             onClick={() => handleTabClick('home')}
           >
             <div className="flex items-center space-x-2">
-              <div className="bg-primary text-white p-1.5 rounded">
+              <div className="bg-gray-800 dark:bg-gray-700 text-white p-1.5 rounded">
                 <i className="fas fa-bolt text-xl"></i>
               </div>
-              <span className="text-xl font-bold text-gray-900 dark:text-purple-50">TalentMatch</span>
+              <span className="text-xl font-bold text-gray-900 dark:text-gray-50">TalentMatch</span>
             </div>
           </div>
 
@@ -135,8 +135,8 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 variant={activeTab === item.id ? "ghost" : "ghost"}
                 className={`px-4 py-2 font-medium rounded-md transition-all duration-300 ${
                   activeTab === item.id 
-                    ? 'bg-blue-50 text-primary dark:bg-purple-800/50 dark:text-purple-200 scale-105' 
-                    : 'text-gray-700 hover:bg-gray-50 dark:text-purple-200 dark:hover:bg-purple-800/30'
+                    ? 'bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200 scale-105' 
+                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
                 }`}
                 onClick={() => handleTabClick(item.id)}
               >
@@ -153,8 +153,8 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 variant={activeTab === 'challenges' ? "ghost" : "ghost"}
                 className={`px-4 py-2 font-medium rounded-md transition-all duration-300 ${
                   activeTab === 'challenges' 
-                    ? 'bg-blue-50 text-primary dark:bg-purple-800/50 dark:text-purple-200 scale-105' 
-                    : 'text-gray-700 hover:bg-gray-50 dark:text-purple-200 dark:hover:bg-purple-800/30'
+                    ? 'bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200 scale-105' 
+                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
                 }`}
                 onClick={() => handleTabClick('challenges')}
               >
@@ -171,7 +171,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="ghost"
-                    className="px-4 py-2 font-medium rounded-md transition-all duration-300 text-gray-700 hover:bg-gray-50 dark:text-purple-200 dark:hover:bg-purple-800/30"
+                    className="px-4 py-2 font-medium rounded-md transition-all duration-300 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
                   >
                     <div className="flex items-center">
                       <BriefcaseIcon className="h-4 w-4 mr-1 md:hidden lg:inline-block" />
@@ -206,7 +206,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             )}
             
             {/* Divider */}
-            <span className="border-l border-gray-200 dark:border-purple-800 mx-1 self-stretch"></span>
+            <span className="border-l border-gray-200 dark:border-gray-700 mx-1 self-stretch"></span>
             
             {/* Secondary Items */}
             {secondaryNavItems.map(item => (
@@ -215,8 +215,8 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 variant="ghost"
                 className={`px-4 py-2 font-medium rounded-md transition-all duration-300 ${
                   activeTab === item.id 
-                    ? 'bg-blue-50 text-primary dark:bg-purple-800/50 dark:text-purple-200 scale-105' 
-                    : 'text-gray-700 hover:bg-gray-50 dark:text-purple-200 dark:hover:bg-purple-800/30'
+                    ? 'bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200 scale-105' 
+                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
                 }`}
                 onClick={() => handleTabClick(item.id)}
               >
