@@ -293,40 +293,66 @@ const HomePage: React.FC = () => {
               return (
                 <Link key={challenge.id} href={`/challenge/${challenge.id}`}>
                   <Card 
-                    className={`group hover:shadow-lg transition-all border-l-4 ${getBorderColor(challenge.category)} 
-                    cursor-pointer h-full transform hover:-translate-y-1 ${getAnimationClass(index)}`}
+                    className={`group hover:shadow-xl transition-all border-l-4 ${getBorderColor(challenge.category)} 
+                    cursor-pointer h-full transform hover:-translate-y-2 ${getAnimationClass(index)} overflow-hidden`}
                   >
-                    <CardContent className="p-6">
-                      <div className="flex justify-between items-start mb-3">
-                        <Badge className={`${getCategoryColor(challenge.category)}`}>
-                          {challenge.category}
-                        </Badge>
-                        {getDifficultyElement(challenge.difficulty || 'Medium')}
-                      </div>
-                      <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{challenge.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{challenge.description}</p>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <Clock className="h-4 w-4 text-gray-400 mr-1" />
-                          <span className="text-sm text-gray-500 dark:text-gray-400">{challenge.timeEstimate}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <Users className="h-4 w-4 text-gray-400 mr-1" />
-                          <span className="text-sm text-gray-500 dark:text-gray-400">{challenge.completions} completions</span>
-                        </div>
-                      </div>
-                      <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <div className="flex justify-between items-center">
-                          <div className="flex gap-1.5">
-                            {['React', 'TypeScript', 'Node.js'].map((skill, i) => (
-                              <span key={i} className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 border border-blue-200 dark:border-blue-700">
-                                {skill}
-                              </span>
-                            ))}
+                    <div className="absolute top-0 right-0 p-2 z-10">
+                      <Badge variant="outline" className={`bg-opacity-90 backdrop-blur-sm ${getDifficultyElement(challenge.difficulty || 'Medium').props.children[0].props.className}`}>
+                        {challenge.difficulty || 'Medium'}
+                      </Badge>
+                    </div>
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                    <CardContent className="p-0">
+                      <div className="relative">
+                        <div className="p-6 pb-4">
+                          <div className="flex items-start mb-3">
+                            <Badge className={`${getCategoryColor(challenge.category)}`}>
+                              {challenge.category}
+                            </Badge>
                           </div>
-                          <Button variant="ghost" size="sm" className="text-blue-600 dark:text-blue-400">
-                            <ArrowRight className="h-4 w-4" />
-                          </Button>
+                          <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{challenge.title}</h3>
+                          <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{challenge.description}</p>
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30">
+                              <Clock className="h-4 w-4 text-blue-500 dark:text-blue-400 mr-1" />
+                              <span className="text-sm text-blue-700 dark:text-blue-300">{challenge.timeEstimate}</span>
+                            </div>
+                            <div className="flex items-center px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30">
+                              <Users className="h-4 w-4 text-blue-500 dark:text-blue-400 mr-1" />
+                              <span className="text-sm text-blue-700 dark:text-blue-300">{challenge.completions} completions</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/40 dark:to-blue-800/40 p-4 border-t border-blue-200 dark:border-blue-800">
+                          <div className="flex justify-between items-center">
+                            <div className="flex gap-1.5 flex-wrap">
+                              {['React', 'TypeScript', 'Node.js'].map((skill, i) => (
+                                <span key={i} className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 border border-blue-200 dark:border-blue-700 hover:bg-blue-200 dark:hover:bg-blue-700 transition-colors">
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
+                            <Button variant="default" size="sm" className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white">
+                              Start <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                            </Button>
+                          </div>
+                          
+                          <div className="mt-3 pt-2 border-t border-blue-200/50 dark:border-blue-800/50 flex justify-between items-center">
+                            <div className="flex -space-x-2">
+                              {[...Array(3)].map((_, i) => (
+                                <div key={i} className="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 border-2 border-white dark:border-blue-900 flex items-center justify-center text-xs font-medium text-blue-800 dark:text-blue-200">
+                                  {String.fromCharCode(65 + i)}
+                                </div>
+                              ))}
+                              <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-800 border-2 border-white dark:border-blue-900 flex items-center justify-center text-xs font-medium text-blue-800 dark:text-blue-200">
+                                +{challenge.completions > 3 ? challenge.completions - 3 : 0}
+                              </div>
+                            </div>
+                            <div className="text-xs text-blue-700 dark:text-blue-300">
+                              Updated {new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric'})}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </CardContent>
