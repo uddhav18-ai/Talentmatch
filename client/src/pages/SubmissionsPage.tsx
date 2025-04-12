@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'wouter';
 import { Submission } from '@shared/schema';
+import { EnhancedSubmission } from '../../server/storage';
 
 const SubmissionsPage: React.FC = () => {
   const { user } = useAuth();
