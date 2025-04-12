@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { SkillSelector } from '../components/candidates/SkillSelector';
+import SkillSelector from '../components/candidates/SkillSelector';
 import { queryClient, apiRequest } from '@/lib/queryClient';
 import { ChevronRight, Award, CheckCircle, Code, FileEdit, User, Briefcase, GraduationCap, Settings } from 'lucide-react';
 
@@ -31,7 +31,7 @@ export default function ProfilePage() {
   });
 
   // Load user submissions
-  const { data: submissions = [] } = useQuery({
+  const { data: submissions = [] as any[] } = useQuery({
     queryKey: ['/api/user/submissions'],
     enabled: !!user,
   });
@@ -39,11 +39,7 @@ export default function ProfilePage() {
   // Update user skills mutation
   const updateSkillsMutation = useMutation({
     mutationFn: async (skills: string[]) => {
-      const response = await apiRequest('/api/user/skills', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ skills }),
-      });
+      const response = await apiRequest('PUT', '/api/user/skills', { skills });
       return response.json();
     },
     onSuccess: () => {
@@ -496,7 +492,7 @@ export default function ProfilePage() {
                     <div>
                       <h3 className="font-medium mb-2">Account Type</h3>
                       <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-                        Current account type: <Badge>{user.profileType.charAt(0).toUpperCase() + user.profileType.slice(1)}</Badge>
+                        Current account type: <Badge>{user.profileType ? user.profileType.charAt(0).toUpperCase() + user.profileType.slice(1) : 'Candidate'}</Badge>
                       </p>
                       <Button variant="outline" disabled>Switch Account Type</Button>
                     </div>

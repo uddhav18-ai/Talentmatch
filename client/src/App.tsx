@@ -6,6 +6,7 @@ import CandidatesPage from './pages/CandidatesPage';
 import CompaniesPage from './pages/CompaniesPage';
 import ChallengesPage from './pages/ChallengesPage';
 import InsightsPage from './pages/InsightsPage';
+import ProfilePage from './pages/ProfilePage';
 import AboutPage from './pages/about-page';
 import ContactPage from './pages/contact-page';
 import ChallengeDetail from './pages/challenge-detail';
@@ -78,6 +79,11 @@ function AppContent() {
         <Route path="/post-work-sample">
           <ProtectedRoute>
             <PostWorkSamplePage />
+          </ProtectedRoute>
+        </Route>
+        <Route path="/profile">
+          <ProtectedRoute>
+            <ProfilePage />
           </ProtectedRoute>
         </Route>
         <Route>
