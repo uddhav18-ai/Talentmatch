@@ -253,9 +253,9 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem 
                       className="cursor-pointer"
-                      onClick={() => setLocation(`/user/profile`)}
+                      onClick={() => setLocation(`/profile`)}
                     >
-                      <User className="h-4 w-4 mr-2" /> Profile
+                      <User className="h-4 w-4 mr-2" /> My Profile
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       className="cursor-pointer"
@@ -354,7 +354,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   variant="ghost"
                   className="block w-full text-left px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-md transition-all duration-300 dark:text-purple-200 dark:hover:bg-purple-800/40"
                   onClick={() => {
-                    setLocation(`/user/profile`);
+                    setLocation(`/profile`);
                     setMobileMenuOpen(false);
                   }}
                 >

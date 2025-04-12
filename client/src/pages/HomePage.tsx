@@ -183,12 +183,12 @@ const HomePage: React.FC = () => {
                 >
                   Explore Challenges <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Link href={user.profileType === 'employer' ? '/companies' : '/candidates'}>
+                <Link href="/profile">
                   <Button 
                     variant="outline" 
                     className="px-6 py-3 bg-transparent border-2 border-white text-white font-semibold rounded-md hover:bg-white hover:bg-opacity-10 transition"
                   >
-                    My Dashboard
+                    My Profile
                   </Button>
                 </Link>
               </>

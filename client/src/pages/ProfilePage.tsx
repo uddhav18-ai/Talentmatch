@@ -371,7 +371,7 @@ export default function ProfilePage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {submissions.length === 0 ? (
+                  {(submissions as any[]).length === 0 ? (
                     <div className="text-center py-10">
                       <p className="text-gray-500 dark:text-gray-400">
                         You haven't submitted any challenges yet.
@@ -382,7 +382,7 @@ export default function ProfilePage() {
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      {submissions.map((submission: any) => (
+                      {(submissions as any[]).map((submission: any) => (
                         <Card key={submission.id} className="overflow-hidden bg-gray-50 dark:bg-purple-900/20">
                           <div className="p-4">
                             <div className="flex justify-between items-start mb-2">
