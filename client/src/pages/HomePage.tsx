@@ -349,6 +349,157 @@ const HomePage: React.FC = () => {
               </div>
             </div>
           </div>
+          
+          {/* Advanced User Flow Diagram */}
+          <div className="max-w-6xl mx-auto mb-12 mt-10">
+            <h3 className="text-xl font-bold text-center mb-8">Advanced User Flow Diagram</h3>
+            
+            <div className="relative bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-6 rounded-xl border border-blue-200 dark:border-blue-700 overflow-hidden">
+              {/* Background Grid Pattern */}
+              <div className="absolute inset-0 grid grid-cols-12 grid-rows-12 opacity-10 dark:opacity-15 pointer-events-none">
+                {Array(144).fill(0).map((_, i) => (
+                  <div key={i} className="border border-blue-200 dark:border-blue-700"></div>
+                ))}
+              </div>
+              
+              {/* Main Interactive Flow Diagram */}
+              <div className="relative z-10">
+                {/* Candidate Path - Left Side */}
+                <div className="flex flex-col md:flex-row justify-between items-center mb-16 relative">
+                  <div className="absolute h-16 left-1/4 right-1/4 top-1/2 border-t-2 border-dashed border-blue-400 dark:border-blue-600 transform -translate-y-8 hidden md:block"></div>
+                  
+                  {/* User Flow Nodes */}
+                  <div className="flex-1 md:max-w-xs">
+                    <div className="bg-white dark:bg-blue-900 p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 dark:border-blue-800 relative mb-20 group">
+                      <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold">C1</div>
+                      <h4 className="font-medium text-lg mb-2">Candidate Sign-Up</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Create account & complete profile</p>
+                      <ul className="text-xs mt-3 space-y-1 text-gray-500 dark:text-gray-400">
+                        <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span>Skills Assessment</li>
+                        <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span>Upload Portfolio</li>
+                        <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span>Set Preferences</li>
+                      </ul>
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-12 bg-blue-300 dark:bg-blue-700 group-hover:bg-blue-500 transition-colors duration-300"></div>
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-12 w-3 h-3 bg-blue-400 dark:bg-blue-600 rounded-full group-hover:bg-blue-500 transition-colors duration-300"></div>
+                    </div>
+                    
+                    <div className="bg-white dark:bg-blue-900 p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 dark:border-blue-800 relative group">
+                      <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold">C2</div>
+                      <h4 className="font-medium text-lg mb-2">Challenge Selection</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Find challenges that match your skills</p>
+                      <div className="flex justify-between mt-3 text-xs text-gray-500 dark:text-gray-400">
+                        <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-yellow-500 mr-1"></span>Easy</span>
+                        <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-orange-500 mr-1"></span>Medium</span>
+                        <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-red-500 mr-1"></span>Hard</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="static-dark-bg bg-blue-600 dark:bg-blue-700 w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-lg my-10 md:my-0 relative z-10 transform hover:scale-110 transition-transform duration-300">
+                    <div className="text-center">
+                      <div className="text-constant">Match</div>
+                      <div className="text-constant">Engine</div>
+                    </div>
+                    <div className="absolute w-full h-full rounded-full border-4 border-blue-400 dark:border-blue-500 animate-ping opacity-70"></div>
+                  </div>
+                  
+                  {/* Company Flow Nodes */}
+                  <div className="flex-1 md:max-w-xs">
+                    <div className="bg-white dark:bg-blue-900 p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 dark:border-blue-800 relative mb-20 group">
+                      <div className="absolute -top-3 -right-3 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold">E1</div>
+                      <h4 className="font-medium text-lg mb-2">Employer Registration</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Create company profile & define needs</p>
+                      <ul className="text-xs mt-3 space-y-1 text-gray-500 dark:text-gray-400">
+                        <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-purple-500 mr-2"></span>Company Details</li>
+                        <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-purple-500 mr-2"></span>Skill Requirements</li>
+                        <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-purple-500 mr-2"></span>Work Culture</li>
+                      </ul>
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-12 bg-indigo-300 dark:bg-indigo-700 group-hover:bg-indigo-500 transition-colors duration-300"></div>
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-12 w-3 h-3 bg-indigo-400 dark:bg-indigo-600 rounded-full group-hover:bg-indigo-500 transition-colors duration-300"></div>
+                    </div>
+                    
+                    <div className="bg-white dark:bg-blue-900 p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 dark:border-blue-800 relative group">
+                      <div className="absolute -top-3 -right-3 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold">E2</div>
+                      <h4 className="font-medium text-lg mb-2">Work Sample Creation</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Design real-world challenges for candidates</p>
+                      <div className="mt-3 text-xs">
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-1">
+                          <div className="bg-indigo-500 h-1.5 rounded-full" style={{ width: '70%' }}></div>
+                        </div>
+                        <div className="flex justify-between text-gray-500 dark:text-gray-400">
+                          <span>Design</span>
+                          <span>Review</span>
+                          <span>Publish</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Results Path - Bottom */}
+                <div className="flex flex-col md:flex-row justify-between gap-4 mt-10">
+                  <div className="bg-white dark:bg-blue-900 p-4 rounded-lg shadow-md flex-1 border border-blue-100 dark:border-blue-800 hover:shadow-lg transition-shadow duration-300">
+                    <h4 className="font-medium text-base mb-1 flex items-center">
+                      <span className="w-4 h-4 bg-green-500 rounded-full mr-2 flex-shrink-0"></span>
+                      Challenge Completion
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Candidates solve real company problems</p>
+                    <div className="mt-2 flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                      <span>Code</span>
+                      <span className="h-0.5 flex-grow mx-2 bg-gray-200 dark:bg-gray-700"></span>
+                      <span>Test</span>
+                      <span className="h-0.5 flex-grow mx-2 bg-gray-200 dark:bg-gray-700"></span>
+                      <span>Submit</span>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white dark:bg-blue-900 p-4 rounded-lg shadow-md flex-1 border border-blue-100 dark:border-blue-800 hover:shadow-lg transition-shadow duration-300">
+                    <h4 className="font-medium text-base mb-1 flex items-center">
+                      <span className="w-4 h-4 bg-blue-500 rounded-full mr-2 flex-shrink-0"></span>
+                      AI Assessment
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Automated scoring of challenge solutions</p>
+                    <div className="mt-2 grid grid-cols-5 gap-1">
+                      {[1, 2, 3, 4, 5].map(num => (
+                        <div key={num} className={`h-1 rounded-full ${num <= 4 ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white dark:bg-blue-900 p-4 rounded-lg shadow-md flex-1 border border-blue-100 dark:border-blue-800 hover:shadow-lg transition-shadow duration-300">
+                    <h4 className="font-medium text-base mb-1 flex items-center">
+                      <span className="w-4 h-4 bg-purple-500 rounded-full mr-2 flex-shrink-0"></span>
+                      Match Results
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Candidates matched with ideal companies</p>
+                    <div className="mt-2 text-xs text-center">
+                      <span className="inline-block px-2 py-1 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300">87% Match Rate</span>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white dark:bg-blue-900 p-4 rounded-lg shadow-md flex-1 border border-blue-100 dark:border-blue-800 hover:shadow-lg transition-shadow duration-300">
+                    <h4 className="font-medium text-base mb-1 flex items-center">
+                      <span className="w-4 h-4 bg-indigo-500 rounded-full mr-2 flex-shrink-0"></span>
+                      Hiring Process
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Streamlined interviews & offers based on data</p>
+                    <div className="mt-2 flex items-center text-xs text-gray-500 dark:text-gray-400">
+                      <span className="px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 mr-1">2x</span>
+                      <span>Faster than traditional hiring</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Legend */}
+                <div className="mt-8 text-xs text-gray-500 dark:text-gray-400 flex flex-wrap gap-3 justify-center">
+                  <span className="flex items-center"><span className="w-3 h-3 rounded-full bg-blue-500 mr-1"></span>Candidate Flow</span>
+                  <span className="flex items-center"><span className="w-3 h-3 rounded-full bg-indigo-500 mr-1"></span>Employer Flow</span>
+                  <span className="flex items-center"><span className="w-3 h-3 rounded-full bg-green-500 mr-1"></span>Challenge Process</span>
+                  <span className="flex items-center"><span className="w-3 h-3 rounded-full bg-purple-500 mr-1"></span>Matching Algorithm</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
