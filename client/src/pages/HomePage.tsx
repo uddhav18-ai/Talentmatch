@@ -28,14 +28,16 @@ const HomePage: React.FC = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   // Fetch top challenges
-  const { data: challenges, isLoading: isLoadingChallenges } = useQuery({
+  const { data: challenges = [], isLoading: isLoadingChallenges } = useQuery({
     queryKey: ['/api/challenges'],
     queryFn: async () => {
       const response = await fetch('/api/challenges');
       if (!response.ok) {
         throw new Error('Failed to fetch challenges');
       }
-      return response.json();
+      const data = await response.json();
+      console.log('Fetched challenges:', data);
+      return data;
     }
   });
 
@@ -184,7 +186,7 @@ const HomePage: React.FC = () => {
               <>
                 <Button 
                   onClick={navigateToChallenges} 
-                  className="px-6 py-3 bg-white text-gray-800 font-semibold rounded-md shadow hover:shadow-lg transition transform hover:-translate-y-0.5"
+                  className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 hover:shadow-lg transition transform hover:-translate-y-0.5"
                 >
                   Explore Challenges <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -200,7 +202,7 @@ const HomePage: React.FC = () => {
             ) : (
               <>
                 <Link href="/candidates">
-                  <Button className="px-6 py-3 bg-white text-gray-800 font-semibold rounded-md shadow hover:shadow-lg transition transform hover:-translate-y-0.5">
+                  <Button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 hover:shadow-lg transition transform hover:-translate-y-0.5">
                     Find Work
                   </Button>
                 </Link>
